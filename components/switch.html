@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Switch — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,74 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="forms.html">Components</a><span>/</span><a href="forms.html">Forms</a><span>/</span><span class="cur">Switch</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · forms</div>
+      <h1>Switch</h1>
+      <p>A binary on/off control styled as a sliding track — for settings that take effect immediately.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="display:flex;gap:20px;align-items:center">
+        <label style="display:flex;gap:9px;align-items:center;cursor:pointer"><span class="sw on" data-sw><span class="kn"></span></span> Auto-verify new attempts</label>
+        <label style="display:flex;gap:9px;align-items:center;cursor:pointer"><span class="sw" data-sw><span class="kn"></span></span> Notify on failure</label>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>States</h2></div>
+      <div class="demo variant-grid">
+        <div class="variant-cell"><span class="sw"><span class="kn"></span></span><span class="lbl code-chip">off</span></div>
+        <div class="variant-cell"><span class="sw on"><span class="kn"></span></span><span class="lbl code-chip">.on</span></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.sw</td><td>36×20px track, <span class="mono">--input</span> fill when off.</td></tr>
+          <tr><td class="mono">.sw .kn</td><td>The sliding knob — animates <span class="mono">left</span> with a cubic-bezier ease.</td></tr>
+          <tr><td class="mono">.sw.on</td><td>Track fills with <span class="mono">--primary</span>; knob slides to 17px.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">A click handler toggles <span class="mono">.on</span> on the <span class="mono">[data-sw]</span> span. There is no underlying <span class="mono">&lt;input type="checkbox" role="switch"&gt;</span>.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>An immediate, self-contained on/off setting.</p></div>
+        <div><h4>When not to use</h4><p>A choice that needs an explicit "Save" step — a Switch implies the change is live.</p></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Not keyboard-operable</b><span>Same pattern as Checkbox and Radio: no <span class="mono">tabindex</span>, no <span class="mono">role="switch"</span>, no <span class="mono">aria-checked</span> — mouse-only today.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;span class="sw on" data-sw&gt;&lt;span class="kn"&gt;&lt;/span&gt;&lt;/span&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Checkbox</span>
+        <span class="soon">Toggle</span>
+      </div>
+    </section>
   </main>
 </div>
 

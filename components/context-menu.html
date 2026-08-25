@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Context Menu — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,74 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="overlays.html">Components</a><span>/</span><a href="overlays.html">Overlays</a><span>/</span><span class="cur">Context Menu</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · overlays</div>
+      <h1>Context Menu</h1>
+      <p>A right-click-triggered menu, positioned at the cursor rather than a fixed trigger.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.ctx-zone — the right-click target]
+[div.menu — positioned at click coordinates on open]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="ctx-zone" id="ctxZone">Right-click here</div>
+      <div class="menu" id="ctxMenu">
+        <div class="menu-item">Adopt</div>
+        <div class="menu-item">Graft from…</div>
+        <div class="menu-sep"></div>
+        <div class="menu-item" style="color:hsl(var(--destructive))">Close attempt</div>
+      </div>
+      <p style="margin-top:10px;font-size:11px;color:hsl(var(--muted-foreground))">Reuses the standard <span class="mono">.menu</span> component, opened via <span class="mono">contextmenu</span> instead of <span class="mono">click</span>.</p></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.ctx-zone</td><td>Dashed-border drop zone marking where right-click is expected.</td></tr>
+          <tr><td class="mono">.menu</td><td>Same shared menu component as Dropdown Menu.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">The zone listens for the native <span class="mono">contextmenu</span> event, calls <span class="mono">preventDefault()</span> to suppress the browser’s own context menu, and positions the shared <span class="mono">.menu</span> at the click’s offset coordinates before opening it. Closes the same way as Dropdown Menu — outside click.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A power-user shortcut for actions on a specific element, alongside (not instead of) a visible trigger elsewhere.</p></div>
+        <div><h4>When not to use</h4><p>As the *only* way to reach an action — right-click discoverability is low; always pair it with a visible alternative.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Mouse-only</b><span>Right-click has no keyboard equivalent wired (no context-menu key or Shift+F10 handling), so keyboard-only users can’t reach this menu at all.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="ctx-zone"&gt;Right-click here&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Dropdown Menu</span>
+      </div>
+    </section>
   </main>
 </div>
 

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Popover — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,76 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="overlays.html">Components</a><span>/</span><a href="overlays.html">Overlays</a><span>/</span><span class="cur">Popover</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · overlays</div>
+      <h1>Popover</h1>
+      <p>Click-triggered rich content anchored to a control — unlike Tooltip or Hover Card, its content can be interactive.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.pop-wrap]
+  [button — trigger]
+  [div.pop — hidden until parent .open]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="pop-wrap" id="popWrap">
+        <button class="btn btn-outline" id="popTrig">Cost breakdown</button>
+        <div class="pop">
+          <div style="font-size:12px;display:flex;justify-content:space-between;padding:3px 0"><span>Compute</span><span class="mono">$0.44</span></div>
+          <div style="font-size:12px;display:flex;justify-content:space-between;padding:3px 0"><span>Verification</span><span class="mono">$0.17</span></div>
         </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.pop-wrap</td><td>Positioning context for the trigger + popover pair.</td></tr>
+          <tr><td class="mono">.pop</td><td>240px popover-shadowed panel, hidden until <span class="mono">.pop-wrap.open</span>.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Trigger click toggles <span class="mono">.open</span> on the wrapper; a document-level click handler closes it on outside click — same base mechanism as Dropdown Menu and Select, just applied to free-form content instead of a menu list.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Extra detail or a small interactive form anchored to a control, revealed on demand.</p></div>
+        <div><h4>When not to use</h4><p>A single line of static help text — use Tooltip instead, which is lighter and hover-triggered.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No popover semantics</b><span>No <span class="mono">aria-expanded</span> on the trigger, no <span class="mono">role="dialog"</span> on the panel, no Escape-to-close or focus management.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="pop-wrap open"&gt;&lt;button&gt;Cost breakdown&lt;/button&gt;&lt;div class="pop"&gt;…&lt;/div&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Hover Card</span>
+        <span class="soon">Tooltip</span>
+        <span class="soon">Dropdown Menu</span>
+      </div>
+    </section>
   </main>
 </div>
 

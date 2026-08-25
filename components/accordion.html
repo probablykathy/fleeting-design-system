@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Accordion — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,77 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="layout-utility.html">Components</a><span>/</span><a href="layout-utility.html">Layout & Utility</a><span>/</span><span class="cur">Accordion</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · layout & utility</div>
+      <h1>Accordion</h1>
+      <p>A list of independently expandable/collapsible panels — more than one can be open at once.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.acc-item.open?] × N, each:
+  [button.acc-trig — label + chevron svg]
+  [div.acc-body — max-height animated]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="acc-item open">
+        <button class="acc-trig">Is this attempt verified? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-body"><p>Yes — checks ran on a Fleeting runner outside the agent’s control.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-trig">What is an agent claim? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-body"><p>A status reported by the agent itself, not yet independently checked.</p></div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.acc-item</td><td>One panel; bottom border separates it from the next.</td></tr>
+          <tr><td class="mono">.acc-trig</td><td>The clickable label row; its chevron rotates 180° when the parent is <span class="mono">.open</span>.</td></tr>
+          <tr><td class="mono">.acc-body</td><td>Height-animated via <span class="mono">max-height</span> transition, capped at 200px.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Each trigger toggles <span class="mono">.open</span> on its own <span class="mono">.acc-item</span> only — opening one does not close any others, so multiple panels can be expanded simultaneously.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Several independent, optional sections of detail (FAQs, grouped settings) where more than one may reasonably be open at once.</p></div>
+        <div><h4>When not to use</h4><p>A single show/hide toggle — use Collapsible, which is built for exactly one panel.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No ARIA disclosure pattern</b><span>No <span class="mono">aria-expanded</span> on the trigger or <span class="mono">aria-controls</span> linking it to the body — the open/closed state isn’t announced to screen readers.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="acc-item open"&gt;&lt;button class="acc-trig"&gt;Question &lt;svg&gt;…&lt;/svg&gt;&lt;/button&gt;&lt;div class="acc-body"&gt;&lt;p&gt;Answer&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Collapsible</span>
+        <span class="soon">Tabs</span>
+      </div>
+    </section>
   </main>
 </div>
 

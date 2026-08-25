@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Toast — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,70 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="feedback.html">Components</a><span>/</span><a href="feedback.html">Feedback</a><span>/</span><span class="cur">Toast</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · feedback</div>
+      <h1>Toast</h1>
+      <p>A transient, bottom-right notification that appears briefly and auto-dismisses.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.toaster — fixed bottom-right position]
+  [div.toast — hidden until .show]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><button class="btn btn-outline" id="fireToast">Promote attempt-2</button>
+      <p style="margin-top:10px;font-size:11px;color:hsl(var(--muted-foreground))">Click to fire a real toast in the bottom-right corner — it clears itself after 2.6s.</p>
+      <div class="toaster"><div class="toast" id="toastEl">✓ attempt-2 promoted · audit entry recorded</div></div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.toaster</td><td>Fixed bottom-right stack, above nearly everything else (<span class="mono">z-index:90</span>).</td></tr>
+          <tr><td class="mono">.toast</td><td>Starts translated right + transparent; <span class="mono">.show</span> resets both for a slide-and-fade-in.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">A shared <span class="mono">window.fireToastMsg(message)</span> function sets the toast’s text, adds <span class="mono">.show</span>, and schedules its removal after 2600ms via <span class="mono">setTimeout</span> (clearing any previous timer first, so rapid re-triggers reset the clock rather than stacking). Only one toast element exists in the source — this is a single-slot notification, not a stacking queue of multiple simultaneous toasts.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Confirming a just-completed action without blocking the page.</p></div>
+        <div><h4>When not to use</h4><p>Anything the user must actively acknowledge — a toast disappears whether or not it was read; use Alert Dialog for anything that requires confirmation.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No live-region announcement</b><span>No <span class="mono">aria-live</span>/<span class="mono">role="status"</span> on the toast — a screen reader user isn’t told it appeared unless they happen to be focused near it.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="toast show"&gt;✓ attempt-2 promoted&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Alert</span>
+        <span class="soon">Alert Dialog</span>
+      </div>
+    </section>
   </main>
 </div>
 

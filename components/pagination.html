@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Pagination — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,72 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="navigation.html">Components</a><span>/</span><a href="navigation.html">Navigation</a><span>/</span><span class="cur">Pagination</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · navigation</div>
+      <h1>Pagination</h1>
+      <p>Page-number controls for moving through a long, paged list.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="pag"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>›</button></div>
+      <p style="margin-top:10px;font-size:11.5px;color:hsl(var(--muted-foreground))">Visual only in this source — see Interaction notes.</p></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>States</h2></div>
+      <div class="demo variant-grid">
+        <div class="variant-cell"><button style="width:26px;height:26px;border:1px solid hsl(var(--border));font-size:11px">2</button><span class="lbl code-chip">default</span></div>
+        <div class="variant-cell"><button class="pag-doc-on" style="width:26px;height:26px;border:1px solid hsl(var(--primary));background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-size:11px">1</button><span class="lbl code-chip">.on</span><span style="font-size:11.5px;color:hsl(var(--muted-foreground));max-width:170px">current page</span></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.pag</td><td>Flex row, 4px gaps.</td></tr>
+          <tr><td class="mono">.pag button</td><td>30×30px bordered square.</td></tr>
+          <tr><td class="mono">.pag button.on</td><td>Current page — filled primary.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">None wired. The buttons render and are focusable/clickable native <span class="mono">&lt;button&gt;</span> elements, but no click handler changes which page is <span class="mono">.on</span> or fires any navigation — this is a static visual reference for the pattern, not a working pager. Documented here accurately rather than implying it works.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A long list split into discrete pages with a known total count.</p></div>
+        <div><h4>When not to use</h4><p>Infinite or continuously-loading lists — use a different loading pattern (e.g. a scroller with Skeleton placeholders).</p></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No current-page semantics</b><span>The active page uses only a visual <span class="mono">.on</span> class, with no <span class="mono">aria-current="page"</span> for screen readers.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="pag"&gt;&lt;button&gt;‹&lt;/button&gt;&lt;button class="on"&gt;1&lt;/button&gt;&lt;button&gt;2&lt;/button&gt;&lt;button&gt;›&lt;/button&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Breadcrumb</span>
+        <span class="soon">Data Table</span>
+      </div>
+    </section>
   </main>
 </div>
 

@@ -42,12 +42,12 @@
     <div class="nav-group">
       <div class="nav-group-label">Components</div>
       <a href="../components/actions.html" class="nav-link">Actions</a>
-      <span class="nav-link soon">Forms</span>
-      <span class="nav-link soon">Navigation</span>
-      <span class="nav-link soon">Overlays</span>
-      <span class="nav-link soon">Data Display</span>
-      <span class="nav-link soon">Feedback</span>
-      <span class="nav-link soon">Layout &amp; Utility</span>
+      <a href="../components/forms.html" class="nav-link">Forms</a>
+      <a href="../components/navigation.html" class="nav-link">Navigation</a>
+      <a href="../components/overlays.html" class="nav-link">Overlays</a>
+      <a href="../components/data-display.html" class="nav-link">Data Display</a>
+      <a href="../components/feedback.html" class="nav-link">Feedback</a>
+      <a href="../components/layout-utility.html" class="nav-link">Layout &amp; Utility</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Themes</div>
@@ -93,8 +93,13 @@
           <div class="cf"><button class="btn btn-outline btn-sm">Adopt</button><button class="btn btn-default btn-sm">Promote</button></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;max-width:400px">
-          <div class="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Verified</div>42 of 42 checks passed independently.</div></div>
-          <div class="alert destructive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Failed</div>3 integration tests regressed.</div></div>
+          <div class="alert success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Success</div><div class="ad">42 of 42 checks passed independently.</div></div></div>
+          <div class="alert destructive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Error</div><div class="ad">3 integration tests regressed.</div></div></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="badge badge-status badge-approved">Approved</span>
+          <span class="badge badge-status badge-pending">Pending</span>
+          <span class="badge badge-status badge-issue">Issue</span>
         </div>
         <input class="inp" style="max-width:280px" placeholder="Filter attempts…">
       </div>

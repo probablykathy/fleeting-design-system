@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Shadows — fleeting design system</title>
+<title>Skeleton — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,21 +33,21 @@
     <div class="nav-group"><a href="../index.html" class="nav-link top-level">Overview</a></div>
     <div class="nav-group">
       <div class="nav-group-label">Foundations</div>
-      <a href="colors.html" class="nav-link">Colors</a>
-      <a href="typography.html" class="nav-link">Typography</a>
-      <a href="spacing.html" class="nav-link">Spacing</a>
-      <a href="borders-radius.html" class="nav-link">Borders &amp; Radius</a>
-      <a href="shadows.html" class="nav-link">Shadows</a>
+      <a href="../foundations/colors.html" class="nav-link">Colors</a>
+      <a href="../foundations/typography.html" class="nav-link">Typography</a>
+      <a href="../foundations/spacing.html" class="nav-link">Spacing</a>
+      <a href="../foundations/borders-radius.html" class="nav-link">Borders &amp; Radius</a>
+      <a href="../foundations/shadows.html" class="nav-link">Shadows</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Components</div>
-      <a href="../components/actions.html" class="nav-link">Actions</a>
-      <a href="../components/forms.html" class="nav-link">Forms</a>
-      <a href="../components/navigation.html" class="nav-link">Navigation</a>
-      <a href="../components/overlays.html" class="nav-link">Overlays</a>
-      <a href="../components/data-display.html" class="nav-link">Data Display</a>
-      <a href="../components/feedback.html" class="nav-link">Feedback</a>
-      <a href="../components/layout-utility.html" class="nav-link">Layout &amp; Utility</a>
+      <a href="actions.html" class="nav-link">Actions</a>
+      <a href="forms.html" class="nav-link">Forms</a>
+      <a href="navigation.html" class="nav-link">Navigation</a>
+      <a href="overlays.html" class="nav-link">Overlays</a>
+      <a href="data-display.html" class="nav-link">Data Display</a>
+      <a href="feedback.html" class="nav-link">Feedback</a>
+      <a href="layout-utility.html" class="nav-link">Layout &amp; Utility</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Themes</div>
@@ -63,42 +63,64 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Foundations</span><span>/</span><span class="cur">Shadows</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="feedback.html">Components</a><span>/</span><a href="feedback.html">Feedback</a><span>/</span><span class="cur">Skeleton</span></nav>
 
     <div class="intro">
-      <div class="kicker">// foundations</div>
-      <h1>Shadows</h1>
-      <p>A deliberate two-tier rule: flat, in-page surfaces carry no shadow at all — separation comes from the 1px border. Shadow appears only on surfaces that float above the page.</p>
+      <div class="kicker">// components · feedback</div>
+      <h1>Skeleton</h1>
+      <p>Shimmering placeholder blocks standing in for content that hasn’t loaded yet.</p>
     </div>
 
     <section class="c">
-      <div class="c-head"><span class="n">01</span><h2>Flat — no shadow</h2><p>Card, Button, Input, Badge, Alert, Table. Separation is border-only.</p></div>
-      <div class="demo">
-        <div class="card" style="max-width:280px">
-          <div class="ch"><h3>No shadow</h3><p>Card, Button, Input…</p></div>
-          <div class="cb">Border-only separation from the page.</div>
-        </div>
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="display:flex;gap:12px;align-items:center">
+        <div class="skel" style="width:34px;height:34px;border-radius:50%"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px"><div class="skel" style="height:11px;width:60%"></div><div class="skel" style="height:10px;width:40%"></div></div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.skel</td><td>Animated gradient sweep (1.4s loop) between <span class="mono">--muted</span> and <span class="mono">--accent</span>; shape (circle, bar) is set per-instance via inline width/height/border-radius.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Pure CSS keyframe animation — no JS swaps it out for real content automatically; that’s left to whatever loads the real data.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A brief, known loading period where showing the eventual layout’s shape helps.</p></div>
+        <div><h4>When not to use</h4><p>Long or unknown-duration loads — pair with a Spinner or real progress instead so the wait doesn’t feel stuck.</p></div>
       </div>
     </section>
 
     <section class="c">
-      <div class="c-head"><span class="n">02</span><h2>Floating — shadow tiers</h2><p>Four distinct shadow values are used across the overlay components, each proportional to how far the surface floats above the page.</p></div>
-      <div class="demo">
-        <div class="tile-row">
-          <div class="tile" style="box-shadow:0 4px 14px rgba(0,0,0,.15);border:1px solid hsl(var(--border))">Tooltip<br>0 4px 14px rgba(0,0,0,.15)</div>
-          <div class="tile" style="box-shadow:0 8px 24px rgba(0,0,0,.12);border:1px solid hsl(var(--border))">Custom Select<br>0 8px 24px rgba(0,0,0,.12)</div>
-          <div class="tile" style="box-shadow:0 10px 30px rgba(0,0,0,.15);border:1px solid hsl(var(--border))">Menu · Popover · Hover Card · Toast<br>0 10px 30px rgba(0,0,0,.15)</div>
-          <div class="tile" style="box-shadow:0 20px 50px rgba(0,0,0,.25);border:1px solid hsl(var(--border))">Dialog<br>0 20px 50px rgba(0,0,0,.25)</div>
-        </div>
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No loading announcement</b><span>No <span class="mono">aria-busy</span> or live region — a screen reader has no indication content is still loading.</span></div>
       </div>
-      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
-        No named shadow tokens exist yet (e.g. <span class="mono">--shadow-sm/md/lg</span>) — these four values are written as
-        literal <span class="mono">box-shadow</span> declarations per component. The four steps are consistent enough to read
-        as an intentional scale (tooltip &lt; select &lt; menu/popover &lt; dialog), which is why they're presented as one here,
-        even though nothing in the CSS formalizes it yet.
-      </p>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="skel" style="width:34px;height:34px;border-radius:50%"&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Spinner</span>
+        <span class="soon">Progress</span>
+      </div>
+    </section>
   </main>
 </div>
 

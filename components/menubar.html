@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Menubar — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,76 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="navigation.html">Components</a><span>/</span><a href="navigation.html">Navigation</a><span>/</span><span class="cur">Menubar</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · navigation</div>
+      <h1>Menubar</h1>
+      <p>A desktop-style application menu bar — a row of labeled triggers, each opening a dropdown of commands.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.menubar]
+  [div.mb-item] × N, each:
+    [button.mb-trig]
+    [div.menu — hidden until parent .open]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="menubar" id="menubarWrap">
+        <div class="mb-item"><button class="mb-trig">Session</button><div class="menu"><div class="menu-item">Replay</div><div class="menu-item">Rename</div></div></div>
+        <div class="mb-item"><button class="mb-trig">View</button><div class="menu"><div class="menu-item">Board</div><div class="menu-item">Table</div></div></div>
+        <div class="mb-item"><button class="mb-trig">Help</button><div class="menu"><div class="menu-item">Docs</div><div class="menu-item">Shortcuts</div></div></div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.menubar</td><td>Bordered row of menu triggers.</td></tr>
+          <tr><td class="mono">.mb-trig</td><td>A single menu label; accent-highlighted on hover or while its menu is open.</td></tr>
+          <tr><td class="mono">.mb-item .menu</td><td>Dropdown reusing the shared <span class="mono">.menu</span>/<span class="mono">.menu-item</span> component.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Same one-open-at-a-time pattern as Navigation Menu: clicking a trigger closes every other open menu in the bar first. Individual <span class="mono">.menu-item</span> rows are visual only — clicking "Replay" or "Rename" does nothing.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Desktop-density command menus (Session / View / Help) in a toolbar-like context.</p></div>
+        <div><h4>When not to use</h4><p>Touch-first or mobile layouts — this pattern assumes a mouse and horizontal space.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No menu semantics or keyboard support</b><span>Same gaps as Dropdown Menu and Navigation Menu: no ARIA menu roles, no arrow-key traversal between items, items have no click behavior.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="mb-item"&gt;&lt;button class="mb-trig"&gt;Session&lt;/button&gt;&lt;div class="menu open"&gt;&lt;div class="menu-item"&gt;Replay&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Navigation Menu</span>
+        <span class="soon">Dropdown Menu</span>
+        <span class="soon">Command</span>
+      </div>
+    </section>
   </main>
 </div>
 

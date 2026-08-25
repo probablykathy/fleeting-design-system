@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Separator — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,71 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="layout-utility.html">Components</a><span>/</span><a href="layout-utility.html">Layout & Utility</a><span>/</span><span class="cur">Separator</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · layout & utility</div>
+      <h1>Separator</h1>
+      <p>A thin dividing line — horizontal between blocks, or vertical inline within a row.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="font-size:12px">Above</div><hr class="sep" style="margin:10px 0"><div style="font-size:12px">Below</div>
+      <div style="display:flex;gap:12px;align-items:center;margin-top:14px;height:20px"><span style="font-size:12px">Verified</span><span class="sep-v"></span><span style="font-size:12px">2 attempts</span></div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Variants</h2></div>
+      <div class="demo variant-grid">
+        <div class="variant-cell"><hr class="sep" style="width:80px"><span class="lbl code-chip">.sep (horizontal)</span></div>
+        <div class="variant-cell"><div style="display:flex;gap:8px;height:18px;align-items:center"><span style="font-size:10px">A</span><span class="sep-v"></span><span style="font-size:10px">B</span></div><span class="lbl code-chip">.sep-v (vertical)</span></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.sep</td><td>1px horizontal rule, border-colored, no default margin (set per use).</td></tr>
+          <tr><td class="mono">.sep-v</td><td>1px vertical divider that stretches to fill its flex row’s height.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">None — purely visual.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A plain visual break between unrelated blocks or inline items.</p></div>
+        <div><h4>When not to use</h4><p>Implying a structural/semantic boundary a screen reader should know about — use a real heading or landmark for that; this is decoration only.</p></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b><span class="mono">&lt;hr&gt;</span> used for the horizontal variant — fine</b><span>A real <span class="mono">&lt;hr&gt;</span> does carry a "thematic break" semantic natively, which is appropriate here.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;hr class="sep"&gt;
+&lt;span class="sep-v"&gt;&lt;/span&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Accordion</span>
+      </div>
+    </section>
   </main>
 </div>
 

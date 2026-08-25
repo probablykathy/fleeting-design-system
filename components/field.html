@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Field — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,80 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="forms.html">Components</a><span>/</span><a href="forms.html">Forms</a><span>/</span><span class="cur">Field</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · forms</div>
+      <h1>Field</h1>
+      <p>The label + control + helper-text wrapper every form control in the system is meant to sit inside.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.field]
+  [label]
+  [input.inp / textarea.inp / etc.]
+  [span.hint — optional helper text]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="field">
+        <label for="f1">Session name</label>
+        <input class="inp" id="f1" placeholder="refactor-auth-middleware">
+        <span class="hint">Used as the branch prefix for every attempt.</span>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.field</td><td>Vertical flex column, 6px gap, 340px max-width.</td></tr>
+          <tr><td class="mono">.field label</td><td>12px, weight 500.</td></tr>
+          <tr><td class="mono">.field .hint</td><td>11px muted-foreground helper text below the control.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">None — pure layout wrapper. The label’s <span class="mono">for</span> attribute is used correctly in the source example, associating it with the input’s <span class="mono">id</span>.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Wrapping any labeled form control — Input, Textarea, Native Select — to get consistent label/hint spacing.</p></div>
+        <div><h4>When not to use</h4><p>Controls that already carry their own inline label, like Checkbox/Radio/Switch rows.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Correct label association — good</b><span>The demo’s <span class="mono">&lt;label for&gt;</span> correctly points at the input’s <span class="mono">id</span>, so clicking the label focuses the field and screen readers announce it properly.</span></div>
+        <div class="a11y-item"><b>Hint isn’t programmatically linked</b><span>The <span class="mono">.hint</span> span isn’t connected via <span class="mono">aria-describedby</span>, so a screen reader user tabbing to the input won’t hear the helper text automatically.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="field"&gt;
+  &lt;label for="f1"&gt;Session name&lt;/label&gt;
+  &lt;input class="inp" id="f1"&gt;
+  &lt;span class="hint"&gt;Used as the branch prefix.&lt;/span&gt;
+&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Input</span>
+        <span class="soon">Textarea</span>
+      </div>
+    </section>
   </main>
 </div>
 

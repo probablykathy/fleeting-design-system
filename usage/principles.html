@@ -42,12 +42,12 @@
     <div class="nav-group">
       <div class="nav-group-label">Components</div>
       <a href="../components/actions.html" class="nav-link">Actions</a>
-      <span class="nav-link soon">Forms</span>
-      <span class="nav-link soon">Navigation</span>
-      <span class="nav-link soon">Overlays</span>
-      <span class="nav-link soon">Data Display</span>
-      <span class="nav-link soon">Feedback</span>
-      <span class="nav-link soon">Layout &amp; Utility</span>
+      <a href="../components/forms.html" class="nav-link">Forms</a>
+      <a href="../components/navigation.html" class="nav-link">Navigation</a>
+      <a href="../components/overlays.html" class="nav-link">Overlays</a>
+      <a href="../components/data-display.html" class="nav-link">Data Display</a>
+      <a href="../components/feedback.html" class="nav-link">Feedback</a>
+      <a href="../components/layout-utility.html" class="nav-link">Layout &amp; Utility</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Themes</div>
@@ -80,8 +80,10 @@
       <p>Flat, in-page surfaces (Card, Button, Input, Table) separate from the page with a 1px border and no shadow. Shadow is reserved exclusively for surfaces that float above the page — menus, popovers, dialogs, tooltips. See <a href="../foundations/shadows.html">Shadows</a>.</p>
     </div>
     <div class="principle">
-      <h3>Token-driven color, almost everywhere</h3>
-      <p>Every color reference in the system goes through <span class="mono">hsl(var(--token))</span> — never a hardcoded hex value — so the same rule paints both themes. The one known exception in the current file: one avatar example sets <span class="mono">color:#fff</span> directly instead of <span class="mono">--primary-foreground</span>. Named here as the concrete counter-example, not smoothed over.</p>
+      <h3>Token-driven color, with two known exceptions</h3>
+      <p>Almost every color reference in the system goes through <span class="mono">hsl(var(--token))</span> — never a hardcoded value — so the same rule paints both themes. Two documented counter-examples, not smoothed over:</p>
+      <p style="margin-top:8px">1. Several avatar examples set <span class="mono">color:#fff</span> directly instead of <span class="mono">--primary-foreground</span>.</p>
+      <p style="margin-top:4px">2. Three of the ten status badges — <span class="mono">.badge-discovery</span>, <span class="mono">.badge-review</span>, <span class="mono">.badge-issue</span> — use hardcoded HSL literals with their own hand-written <span class="mono">:root[data-theme="dark"] .badge-x</span> dark-mode overrides, rather than reading from a token. This is the first place in the system where a component reaches around the token layer to handle its own dark-mode color directly. See <a href="../foundations/colors.html">Foundations → Colors</a> for the exact values. This is recorded as a known exception to fix later, not treated as if the system were fully token-driven.</p>
     </div>
     <div class="principle">
       <h3>Two typefaces, one rule</h3>

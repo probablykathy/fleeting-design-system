@@ -42,12 +42,12 @@
     <div class="nav-group">
       <div class="nav-group-label">Components</div>
       <a href="../components/actions.html" class="nav-link">Actions</a>
-      <span class="nav-link soon">Forms</span>
-      <span class="nav-link soon">Navigation</span>
-      <span class="nav-link soon">Overlays</span>
-      <span class="nav-link soon">Data Display</span>
-      <span class="nav-link soon">Feedback</span>
-      <span class="nav-link soon">Layout &amp; Utility</span>
+      <a href="../components/forms.html" class="nav-link">Forms</a>
+      <a href="../components/navigation.html" class="nav-link">Navigation</a>
+      <a href="../components/overlays.html" class="nav-link">Overlays</a>
+      <a href="../components/data-display.html" class="nav-link">Data Display</a>
+      <a href="../components/feedback.html" class="nav-link">Feedback</a>
+      <a href="../components/layout-utility.html" class="nav-link">Layout &amp; Utility</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Themes</div>
@@ -115,13 +115,30 @@
     </section>
 
     <section class="c">
-      <div class="c-head"><span class="n">05</span><h2>Chart</h2><p>Defined in both themes. Only <span class="mono">--chart-info</span> is actually used today (chart bars, one avatar fill) — <span class="mono">--chart-ok</span>, <span class="mono">--chart-warn</span> and <span class="mono">--chart-claim</span> exist in the token set but aren't wired into any component yet. Documented here as-is rather than hidden.</p></div>
+      <div class="c-head"><span class="n">05</span><h2>Chart</h2><p>Defined in both themes. As of the latest source sync, all four are actually consumed: <span class="mono">--chart-info</span> by the chart bars, line graph and one avatar fill; <span class="mono">--chart-ok</span>/<span class="mono">--chart-warn</span>/<span class="mono">--chart-claim</span> by the new status Badges and Alert variants (Approved/soft-success tones, Pending/warning tones, Submitted/claim tones) and the grouped/stacked Chart series. Previously three of these four were unused — that's no longer accurate and has been corrected here.</p></div>
       <div class="swatch-grid">
-        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-ok))"></div><div data-theme="dark" style="background:hsl(var(--chart-ok))"></div></div><div class="swatch-meta"><div class="name">--chart-ok <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 158 64% 32% · D 158 55% 50%</div></div></div>
-        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-warn))"></div><div data-theme="dark" style="background:hsl(var(--chart-warn))"></div></div><div class="swatch-meta"><div class="name">--chart-warn <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 32 90% 40% · D 32 85% 60%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-ok))"></div><div data-theme="dark" style="background:hsl(var(--chart-ok))"></div></div><div class="swatch-meta"><div class="name">--chart-ok</div><div class="val">L 158 64% 32% · D 158 55% 50%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-warn))"></div><div data-theme="dark" style="background:hsl(var(--chart-warn))"></div></div><div class="swatch-meta"><div class="name">--chart-warn</div><div class="val">L 32 90% 40% · D 32 85% 60%</div></div></div>
         <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-info))"></div><div data-theme="dark" style="background:hsl(var(--chart-info))"></div></div><div class="swatch-meta"><div class="name">--chart-info</div><div class="val">L 217 80% 56% · D 217 85% 70%</div></div></div>
-        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-claim))"></div><div data-theme="dark" style="background:hsl(var(--chart-claim))"></div></div><div class="swatch-meta"><div class="name">--chart-claim <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 255 60% 55% · D 255 75% 76%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-claim))"></div><div data-theme="dark" style="background:hsl(var(--chart-claim))"></div></div><div class="swatch-meta"><div class="name">--chart-claim</div><div class="val">L 255 60% 55% · D 255 75% 76%</div></div></div>
       </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">06</span><h2>Status badge colors — not tokens</h2><p>Three of the ten new status badges (Discovery, In Review, Issue) don't go through a custom property at all. Documented here exactly as implemented, not converted to tokens yet — see <a href="../usage/principles.html">Principles</a> for why this is flagged as a known exception rather than fixed silently.</p></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div style="background:hsl(320 70% 45%)"></div><div style="background:hsl(320 80% 72%)"></div></div><div class="swatch-meta"><div class="name">.badge-discovery</div><div class="val">L hsl(320 70% 45%) · D hsl(320 80% 72%)</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div style="background:hsl(38 75% 38%)"></div><div style="background:hsl(45 90% 65%)"></div></div><div class="swatch-meta"><div class="name">.badge-review</div><div class="val">L hsl(38 75% 38%) · D hsl(45 90% 65%)</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div style="background:hsl(0 65% 40%)"></div><div style="background:hsl(0 70% 68%)"></div></div><div class="swatch-meta"><div class="name">.badge-issue</div><div class="val">L hsl(0 65% 40%) · D hsl(0 70% 68%)</div></div></div>
+      </div>
+      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
+        Each of these three sets its own light-mode HSL literal directly in <span class="mono">components.css</span>, then
+        overrides just the text color for dark mode via a dedicated <span class="mono">:root[data-theme="dark"] .badge-x</span>
+        rule — the first per-component dark override in the system; every other color swap happens through the token
+        blocks alone. The other seven status badges (Approved, Submitted, Publishing, Pending, Failed, Draft, Archived)
+        all route through existing tokens (<span class="mono">--chart-ok/claim/info/warn</span>, <span class="mono">--destructive</span>,
+        <span class="mono">--muted-foreground</span>) and need no such override.
+      </p>
     </section>
 
   </main>

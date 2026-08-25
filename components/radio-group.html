@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Radio Group — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,82 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="forms.html">Components</a><span>/</span><a href="forms.html">Forms</a><span>/</span><span class="cur">Radio Group</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · forms</div>
+      <h1>Radio Group</h1>
+      <p>A set of mutually exclusive circular selectors — exactly one option in the group can be chosen.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[label] × N, each with
+  [span.rdo[data-rdo="group-name"]]
+  text</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="display:flex;flex-direction:column;gap:10px">
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="rdo on" data-rdo="promote-doc"></span> Promote to shared trust</label>
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="rdo" data-rdo="promote-doc"></span> Adopt locally only</label>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>States</h2></div>
+      <div class="demo variant-grid">
+        <div class="variant-cell"><span class="rdo"></span><span class="lbl code-chip">unselected</span></div>
+        <div class="variant-cell"><span class="rdo on"></span><span class="lbl code-chip">.on (selected)</span></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.rdo</td><td>16×16px circular bordered control.</td></tr>
+          <tr><td class="mono">.rdo.on::after</td><td>Scales a filled inner dot in from 0 (150ms) — the selected mark.</td></tr>
+          <tr><td class="mono">[data-rdo="name"]</td><td>Shared group key: clicking any radio with the same key clears <span class="mono">.on</span> from every sibling before marking the clicked one.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Mutual exclusion is enforced entirely by the <span class="mono">data-rdo</span> attribute matching — all elements sharing the same value are treated as one group, queried fresh on every click.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Exactly one choice from a small, fully visible set of options.</p></div>
+        <div><h4>When not to use</h4><p>More than ~5–6 options (a Select scales better), or when zero/multiple selections should be allowed (use Checkbox).</p></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Not keyboard-operable, no group semantics</b><span>Same gap as Checkbox: plain <span class="mono">&lt;span&gt;</span> elements, no <span class="mono">tabindex</span>, no <span class="mono">role="radio"</span>/<span class="mono">role="radiogroup"</span>, no arrow-key navigation between options.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;span class="rdo on" data-rdo="promote-doc"&gt;&lt;/span&gt;
+&lt;span class="rdo" data-rdo="promote-doc"&gt;&lt;/span&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Checkbox</span>
+        <span class="soon">Select</span>
+      </div>
+    </section>
   </main>
 </div>
 

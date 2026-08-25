@@ -1,14 +1,20 @@
 /*
-  Component interactions — ported from the original single-file catalogue.
+  Component interactions — ported from the source single-file catalogue.
 
-  The original script assumed every element existed exactly once on the one
-  page it lived on (e.g. document.getElementById('openDialog').onclick = ...
+  The source script assumes every element exists exactly once on the one
+  page it lives on (e.g. document.getElementById('openDialog').onclick = ...
   would throw if #openDialog were ever absent). This site loads the same
   script on every page, and most pages contain only a handful of the 53
   components' markup — so every block below is guarded: it does nothing if
   its elements aren't present on the current page, instead of throwing and
   aborting the rest of the file. The behavior itself, wherever its markup
-  does exist, is unchanged from the original.
+  does exist, is unchanged from the source.
+
+  Re-synced against the "Update components and states" revision: the Alert
+  Dialog block now wires the three progress/success/failure overlays (the
+  old single confirm dialog's ids are gone, not reintroduced); added the
+  range-picker Calendar, Input OTP verify/shake/success, and the Slider's
+  floating tooltip.
 */
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -197,6 +203,61 @@ document.addEventListener('DOMContentLoaded', function () {
     dpTrig.onclick = function (e) { e.stopPropagation(); dpWrap.classList.toggle('open'); };
   }
 
+  // Range calendar — a second, independent builder (not a parameterization
+  // of buildCalendar above), matching how the source implements it: start/end
+  // click-to-pick state that buildCalendar's single-date model doesn't have.
+  function buildRangeCalendar(el, labelEl) {
+    if (!el) return;
+    var now = new Date(2026, 7, 25);
+    var viewM = now.getMonth(), viewY = now.getFullYear();
+    var start = null, end = null;
+    function fmt(y, m, d) { return new Date(y, m, d).toLocaleDateString('en', { month: 'short', day: 'numeric' }); }
+    function render() {
+      var first = new Date(viewY, viewM, 1);
+      var startDow = first.getDay();
+      var daysInMonth = new Date(viewY, viewM + 1, 0).getDate();
+      var monthName = first.toLocaleString('en', { month: 'long' });
+      var html = '<div class="ch"><button data-nav="-1">‹</button><span>' + monthName + ' ' + viewY + '</span><button data-nav="1">›</button></div><div class="cal-grid">';
+      ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(function (d) { html += '<div class="dow">' + d + '</div>'; });
+      for (var i = 0; i < startDow; i++) html += '<button class="mut" disabled></button>';
+      for (var d = 1; d <= daysInMonth; d++) {
+        var cls = '';
+        var cur = new Date(viewY, viewM, d).getTime();
+        if (start && cur === start.getTime()) cls = 'range-start';
+        else if (end && cur === end.getTime()) cls = 'range-end';
+        else if (start && end && cur > start.getTime() && cur < end.getTime()) cls = 'in-range';
+        html += '<button class="' + cls + '" data-day="' + d + '">' + d + '</button>';
+      }
+      html += '</div>';
+      el.innerHTML = html;
+      el.querySelectorAll('[data-nav]').forEach(function (b) {
+        b.onclick = function (ev) {
+          ev.stopPropagation();
+          viewM += +b.dataset.nav;
+          if (viewM < 0) { viewM = 11; viewY--; }
+          if (viewM > 11) { viewM = 0; viewY++; }
+          render();
+        };
+      });
+      el.querySelectorAll('[data-day]').forEach(function (b) {
+        b.onclick = function (ev) {
+          ev.stopPropagation();
+          var picked = new Date(viewY, viewM, +b.dataset.day);
+          if (!start || (start && end)) { start = picked; end = null; }
+          else if (picked.getTime() < start.getTime()) { end = start; start = picked; }
+          else { end = picked; }
+          render();
+          if (labelEl) {
+            if (start && !end) labelEl.textContent = 'From ' + fmt(start.getFullYear(), start.getMonth(), start.getDate()) + ' — pick an end date';
+            else if (start && end) labelEl.textContent = fmt(start.getFullYear(), start.getMonth(), start.getDate()) + ' → ' + fmt(end.getFullYear(), end.getMonth(), end.getDate());
+          }
+        };
+      });
+    }
+    render();
+  }
+  buildRangeCalendar(document.getElementById('cal3'), document.getElementById('rangeLabel'));
+
   // Command palette filter
   var cmdInput = document.getElementById('cmdInput');
   if (cmdInput) {
@@ -224,13 +285,40 @@ document.addEventListener('DOMContentLoaded', function () {
     dialogOverlay.onclick = function (e) { if (e.target.id === 'dialogOverlay') e.currentTarget.classList.remove('open'); };
   }
 
-  // Alert dialog
-  var openAlertDialog = document.getElementById('openAlertDialog'), alertDialogOverlay = document.getElementById('alertDialogOverlay');
-  var cancelAlertDialog = document.getElementById('cancelAlertDialog'), confirmAlertDialog = document.getElementById('confirmAlertDialog');
-  if (openAlertDialog && alertDialogOverlay) openAlertDialog.onclick = function () { alertDialogOverlay.classList.add('open'); };
-  if (cancelAlertDialog && alertDialogOverlay) cancelAlertDialog.onclick = function () { alertDialogOverlay.classList.remove('open'); };
-  if (confirmAlertDialog && alertDialogOverlay) {
-    confirmAlertDialog.onclick = function () { alertDialogOverlay.classList.remove('open'); fireToastMsg('— attempt closed'); };
+  // Alert dialog — three independent flows (progress / success / failure),
+  // replacing the single confirm dialog the source used to have. The old
+  // #alertDialogOverlay / #confirmAlertDialog / #cancelAlertDialog ids are
+  // gone from the source and are intentionally not reintroduced here.
+  var openAD_progress = document.getElementById('openAD_progress'), adProgressOverlay = document.getElementById('adProgressOverlay');
+  var closeAD_progress = document.getElementById('closeAD_progress'), adProgressBar = document.getElementById('adProgressBar'), adProgressLabel = document.getElementById('adProgressLabel');
+  if (openAD_progress && adProgressOverlay && adProgressBar && adProgressLabel) {
+    openAD_progress.onclick = function () {
+      adProgressOverlay.classList.add('open');
+      adProgressBar.style.width = '0%';
+      adProgressLabel.textContent = '0%';
+      var p = 0;
+      clearInterval(window._adTimer);
+      window._adTimer = setInterval(function () {
+        p = Math.min(100, p + Math.random() * 18);
+        adProgressBar.style.width = p + '%';
+        adProgressLabel.textContent = Math.round(p) + '%';
+        if (p >= 100) clearInterval(window._adTimer);
+      }, 350);
+    };
+  }
+  if (closeAD_progress && adProgressOverlay) {
+    closeAD_progress.onclick = function () { clearInterval(window._adTimer); adProgressOverlay.classList.remove('open'); };
+  }
+
+  var openAD_success = document.getElementById('openAD_success'), adSuccessOverlay = document.getElementById('adSuccessOverlay'), closeAD_success = document.getElementById('closeAD_success');
+  if (openAD_success && adSuccessOverlay) openAD_success.onclick = function () { adSuccessOverlay.classList.add('open'); };
+  if (closeAD_success && adSuccessOverlay) closeAD_success.onclick = function () { adSuccessOverlay.classList.remove('open'); };
+
+  var openAD_fail = document.getElementById('openAD_fail'), adFailOverlay = document.getElementById('adFailOverlay'), closeAD_fail = document.getElementById('closeAD_fail'), retryAD_fail = document.getElementById('retryAD_fail');
+  if (openAD_fail && adFailOverlay) openAD_fail.onclick = function () { adFailOverlay.classList.add('open'); };
+  if (closeAD_fail && adFailOverlay) closeAD_fail.onclick = function () { adFailOverlay.classList.remove('open'); };
+  if (retryAD_fail && adFailOverlay && openAD_progress) {
+    retryAD_fail.onclick = function () { adFailOverlay.classList.remove('open'); openAD_progress.click(); };
   }
 
   // Drawer
@@ -254,4 +342,68 @@ document.addEventListener('DOMContentLoaded', function () {
   if (fireToast) {
     fireToast.onclick = function () { window.fireToastMsg('✓ attempt-2 promoted · audit entry recorded'); };
   }
+
+  // Input OTP: auto-advance between digits, verify against a fixed code,
+  // shake + clear on a wrong entry, success border on the right one.
+  (function () {
+    var box = document.getElementById('otpBox');
+    var verifyBtn = document.getElementById('otpVerify');
+    var msg = document.getElementById('otpMsg');
+    if (!box || !verifyBtn || !msg) return;
+    var inputs = [].slice.call(box.querySelectorAll('input'));
+    var CODE = '123456';
+    inputs.forEach(function (inp, i) {
+      inp.addEventListener('input', function () {
+        inp.value = inp.value.replace(/[^0-9]/g, '').slice(0, 1);
+        box.classList.remove('shake', 'success');
+        if (inp.value && inputs[i + 1]) inputs[i + 1].focus();
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !inp.value && inputs[i - 1]) inputs[i - 1].focus();
+      });
+    });
+    verifyBtn.onclick = function () {
+      var entered = inputs.map(function (i) { return i.value; }).join('');
+      if (entered.length < 6) {
+        msg.textContent = 'Enter all 6 digits';
+        msg.style.color = 'hsl(var(--muted-foreground))';
+        return;
+      }
+      if (entered === CODE) {
+        box.classList.remove('shake');
+        box.classList.add('success');
+        msg.textContent = '✓ verified';
+        msg.style.color = 'hsl(var(--chart-ok))';
+      } else {
+        box.classList.remove('success');
+        box.classList.remove('shake');
+        void box.offsetWidth;
+        box.classList.add('shake');
+        msg.textContent = 'Wrong code — try 1 2 3 4 5 6';
+        msg.style.color = 'hsl(var(--destructive))';
+        inputs.forEach(function (i) { i.value = ''; });
+        inputs[0].focus();
+      }
+    };
+  })();
+
+  // Slider: floating tooltip tracks the thumb
+  (function () {
+    var wrap = document.getElementById('sliderWrap');
+    var input = document.getElementById('sliderInput');
+    var tip = document.getElementById('sliderTip');
+    if (!wrap || !input || !tip) return;
+    function place() {
+      var min = +input.min, max = +input.max, val = +input.value;
+      var pct = (val - min) / (max - min);
+      var thumb = 16;
+      var trackWidth = input.offsetWidth - thumb;
+      var left = thumb / 2 + pct * trackWidth;
+      tip.style.left = left + 'px';
+      tip.textContent = val;
+    }
+    input.addEventListener('input', place);
+    addEventListener('resize', place);
+    place();
+  })();
 });

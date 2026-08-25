@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Slider — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,79 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="forms.html">Components</a><span>/</span><a href="forms.html">Forms</a><span>/</span><span class="cur">Slider</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · forms</div>
+      <h1>Slider</h1>
+      <p>A native range input with a floating value tooltip that tracks the thumb as it’s dragged.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.slider-wrap]
+  [span.slider-tip — positioned by JS, follows the thumb]
+  [input type=range]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="max-width:320px;padding-top:34px">
+        <div class="slider-wrap" id="sliderWrap">
+          <span class="slider-tip" id="sliderTip">61</span>
+          <input type="range" min="0" max="100" value="61" id="sliderInput">
         </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      </div>
+      <p style="margin-top:10px;font-size:11.5px;color:hsl(var(--muted-foreground))">Drag it — the tooltip above the thumb tracks in real time.</p></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">input[type=range]</td><td>Native range input, tinted with <span class="mono">accent-color</span> — thumb/track chrome is otherwise the browser’s own.</td></tr>
+          <tr><td class="mono">.slider-tip</td><td>Small mono-font popover positioned by inline <span class="mono">left</span>, with a small triangle pointer.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">On every <span class="mono">input</span> event, JS computes the thumb’s approximate pixel position from the range’s min/max/value and offsetWidth, and moves the tooltip’s <span class="mono">left</span> to match; it also recalculates on window resize.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A single numeric value picked from a continuous range where seeing the exact number while dragging helps.</p></div>
+        <div><h4>When not to use</h4><p>Precise, typed numeric entry — pair with or use Input instead.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Native input — good</b><span>Arrow-key adjustment and screen-reader value announcement come from the native <span class="mono">&lt;input type="range"&gt;</span> for free.</span></div>
+        <div class="a11y-item"><b>Tooltip is visual-only</b><span>The floating value tooltip has no <span class="mono">aria-live</span> wiring — screen readers already hear the native input’s own value change, so this isn’t a functional gap, just a note that the tooltip isn’t what announces the value.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="slider-wrap"&gt;
+  &lt;span class="slider-tip"&gt;61&lt;/span&gt;
+  &lt;input type="range" min="0" max="100" value="61"&gt;
+&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Progress</span>
+        <span class="soon">Input</span>
+      </div>
+    </section>
   </main>
 </div>
 

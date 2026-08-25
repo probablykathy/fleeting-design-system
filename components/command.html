@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Command — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,78 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="overlays.html">Components</a><span>/</span><a href="overlays.html">Overlays</a><span>/</span><span class="cur">Command</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · overlays</div>
+      <h1>Command</h1>
+      <p>A searchable command palette — type to filter a grouped list of attempts and actions by keyword.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.cmdk]
+  [input — filter]
+  [div.grp-l — group label] then [div.itm] × N, repeated per group</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div class="cmdk">
+        <input placeholder="Type a command or search…" id="cmdInput">
+        <div class="grp-l">ATTEMPTS</div>
+        <div class="itm" data-k="attempt-1 token-cache rewrite">attempt-1 · token-cache rewrite <span class="mono" style="color:hsl(var(--muted-foreground))">⌘1</span></div>
+        <div class="itm" data-k="attempt-2 middleware split">attempt-2 · middleware split <span class="mono" style="color:hsl(var(--muted-foreground))">⌘2</span></div>
+        <div class="grp-l">ACTIONS</div>
+        <div class="itm" data-k="promote best candidate">Promote best candidate</div>
+        <div class="itm" data-k="compare attempts">Compare attempts</div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.cmdk</td><td>Bordered panel, 420px max-width.</td></tr>
+          <tr><td class="mono">.grp-l</td><td>Uppercase mono group label.</td></tr>
+          <tr><td class="mono">.itm</td><td>A single filterable row; <span class="mono">.hide</span> toggled by the search.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">Typing in the input lowercases the query and toggles <span class="mono">.hide</span> on every <span class="mono">.itm</span> whose <span class="mono">data-k</span> attribute doesn’t contain it — a simple substring filter, not fuzzy matching. There’s no keyboard up/down selection, no Enter-to-run, and no global shortcut (like ⌘K) to open it — in this source it’s presented as an always-visible inline panel, not a real invokable overlay with its own open/close trigger.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>A searchable list of many actions or records where typing to filter is faster than scrolling.</p></div>
+        <div><h4>When not to use</h4><p>A short, fixed list — Dropdown Menu is lighter for that.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No listbox/combobox semantics</b><span>No <span class="mono">role="listbox"</span>, no <span class="mono">aria-activedescendant</span>, no arrow-key or Enter handling — filtering works, but selecting a result does not.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="cmdk"&gt;&lt;input placeholder="Search…"&gt;&lt;div class="itm" data-k="promote"&gt;Promote&lt;/div&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Select</span>
+        <span class="soon">Dropdown Menu</span>
+      </div>
+    </section>
   </main>
 </div>
 

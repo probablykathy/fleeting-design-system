@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Dialog — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,80 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="overlays.html">Components</a><span>/</span><a href="overlays.html">Overlays</a><span>/</span><span class="cur">Dialog</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · overlays</div>
+      <h1>Dialog</h1>
+      <p>A non-destructive modal for showing detail without leaving the page — dismissible by clicking outside.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
+      <div class="c-head"><h2>Anatomy</h2></div>
+      <div class="anatomy-block">[div.overlay — scrim, fixed, hidden until .open]
+  [div.dialog]
+    [div.dh — title + description]
+    [div.db — body]
+    [div.df — footer actions]</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><button class="btn btn-outline" id="openDialog">Environment details…</button>
+      <p style="margin-top:10px;font-size:11px;color:hsl(var(--muted-foreground))">Opens the real, centered overlay — click the button.</p>
+      <div class="overlay" id="dialogOverlay">
+        <div class="dialog">
+          <div class="dh"><h3>Environment details</h3><p>attempt-2 · snapshot env-7c41</p></div>
+          <div class="db">Rust 1.86, locked toolchain. Replayable from this exact snapshot at any time.</div>
+          <div class="df"><button class="btn btn-outline btn-sm" id="closeDialog">Close</button></div>
         </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.overlay</td><td>Fixed, full-viewport scrim; <span class="mono">display:none</span> until <span class="mono">.open</span>.</td></tr>
+          <tr><td class="mono">.dialog</td><td>The panel itself — 420px max-width, elevated shadow.</td></tr>
+          <tr><td class="mono">.dh / .db / .df</td><td>Header, body, and right-aligned footer action row.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">The trigger adds <span class="mono">.open</span> to the overlay; the close button removes it; clicking the scrim itself (not the dialog panel) also closes it, via a check that the click target is the overlay element and not a descendant.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Non-destructive, dismiss-anytime detail or a short secondary task.</p></div>
+        <div><h4>When not to use</h4><p>A choice that needs to be forced — use Alert Dialog, which can’t be dismissed by outside click.</p></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Accessibility</h2></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>No focus trap or Escape</b><span>Tabbing while the dialog is open moves focus out into the page behind it, and Escape does nothing — both expected behaviors for a modal that aren’t implemented here.</span></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="overlay open"&gt;&lt;div class="dialog"&gt;&lt;div class="dh"&gt;&lt;h3&gt;Title&lt;/h3&gt;&lt;/div&gt;&lt;div class="df"&gt;&lt;button class="btn btn-outline btn-sm"&gt;Close&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Alert Dialog</span>
+        <span class="soon">Drawer</span>
+      </div>
+    </section>
   </main>
 </div>
 

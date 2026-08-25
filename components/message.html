@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
-<title>Actions — fleeting design system</title>
+<title>Message — fleeting design system</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,59 +63,67 @@
   </nav>
 
   <main class="main">
-    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Components</span><span>/</span><span class="cur">Actions</span></nav>
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><a href="data-display.html">Components</a><span>/</span><a href="data-display.html">Data Display</a><span>/</span><span class="cur">Message</span></nav>
 
     <div class="intro">
-      <div class="kicker">// components</div>
-      <h1>Actions</h1>
-      <p>Buttons and toggles — the primitives for triggering a command or switching a piece of state. 4 components in this category; Button is the reference template every other component page follows.</p>
+      <div class="kicker">// components · data display</div>
+      <h1>Message</h1>
+      <p>A single chat-style bubble, in "me" or "them" alignment — the building block for Message Scroller.</p>
     </div>
 
     <section class="c">
-      <div class="grid-cards">
-        <div class="card">
-          <a class="card-link" href="button.html">
-            <div class="ch"><h3>Button</h3><p>btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button class="btn btn-default btn-sm">Promote</button>
-                <button class="btn btn-outline btn-sm">Adopt</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="button-group.html">
-            <div class="ch"><h3>Button Group</h3><p>btngroup</p></div>
-            <div class="cb">
-              <div class="btngroup">
-                <button class="btn btn-outline btn-sm">Board</button>
-                <button class="btn btn-outline btn-sm">Table</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle.html">
-            <div class="ch"><h3>Toggle</h3><p>tgl-btn</p></div>
-            <div class="cb">
-              <div style="display:flex;gap:8px">
-                <span class="tgl-btn on">Bold</span><span class="tgl-btn">Italic</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="card">
-          <a class="card-link" href="toggle-group.html">
-            <div class="ch"><h3>Toggle Group</h3><p>tglgroup</p></div>
-            <div class="cb">
-              <div class="tglgroup"><span class="tgl-btn on">Board</span><span class="tgl-btn">Table</span></div>
-            </div>
-          </a>
-        </div>
+      <div class="c-head"><h2>Live preview</h2></div>
+      <div class="demo"><div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <div class="msg them">Agent reported "tests pass" — claim recorded, not trusted.</div>
+        <div class="msg me" style="align-self:flex-end">Fleeting ran 42 checks independently — all passed.</div>
+      </div></div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Variants</h2></div>
+      <div class="demo variant-grid">
+        <div class="variant-cell"><div class="msg them">Agent claims "tests pass"</div><span class="lbl code-chip">.msg.them</span></div>
+        <div class="variant-cell"><div class="msg me">Verified independently</div><span class="lbl code-chip">.msg.me</span></div>
       </div>
     </section>
 
+    <section class="c">
+      <div class="c-head"><h2>Class reference</h2></div>
+      <table>
+        <thead><tr><th>Class</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.msg</td><td>Base bubble: 75% max-width, 9px/12px padding.</td></tr>
+          <tr><td class="mono">.msg.me</td><td>Right-aligned, filled with <span class="mono">--primary</span>.</td></tr>
+          <tr><td class="mono">.msg.them</td><td>Left-aligned, bordered card surface.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Interaction notes</h2></div>
+      <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">None — static markup; alignment (<span class="mono">align-self</span>) is set inline per message in the source rather than derived automatically from the <span class="mono">.me</span>/<span class="mono">.them</span> class.</p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Usage</h2></div>
+      <div class="guide-compare">
+        <div><h4>When to use</h4><p>Showing a short exchange between an agent and the verification system, or any two-party message log.</p></div>
+        <div><h4>When not to use</h4><p>A long scrolling history — use Message Scroller, which adds the scroll container.</p></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Code</h2></div>
+      <div class="anatomy-block">&lt;div class="msg them"&gt;Agent claims tests pass&lt;/div&gt;
+&lt;div class="msg me"&gt;Verified independently&lt;/div&gt;</div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><h2>Related components</h2></div>
+      <div class="related-list">
+        <span class="soon">Message Scroller</span>
+      </div>
+    </section>
   </main>
 </div>
 

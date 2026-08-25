@@ -1,4 +1,4 @@
-/* Global reset and base element styles — ported verbatim from the original catalogue. */
+/* Global reset and base element styles — ported verbatim from the source catalogue. */
 
 *{box-sizing:border-box;margin:0;padding:0;border-color:hsl(var(--border));}
 button{-webkit-appearance:none;appearance:none;background:none;border:0;font:inherit;color:inherit;cursor:pointer;}
@@ -7,3 +7,6 @@ a{color:inherit;}
 .mono{font-family:'JetBrains Mono',monospace;}
 ::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:hsl(var(--border));} ::-webkit-scrollbar-track{background:transparent;}
 :focus-visible{outline:2px solid hsl(var(--ring));outline-offset:1px;}
+button,.badge,.cbx,.rdo,.sw,.sw .kn,.item,.menu-item,.tabstrig,.tgl-btn,.acc-trig svg,.select-trig,.inp,.spill,.qtile{
+  transition:background .18s ease,color .18s ease,border-color .18s ease,transform .15s ease,box-shadow .18s ease,opacity .18s ease;
+}

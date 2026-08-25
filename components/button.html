@@ -42,12 +42,12 @@
     <div class="nav-group">
       <div class="nav-group-label">Components</div>
       <a href="actions.html" class="nav-link">Actions</a>
-      <span class="nav-link soon">Forms</span>
-      <span class="nav-link soon">Navigation</span>
-      <span class="nav-link soon">Overlays</span>
-      <span class="nav-link soon">Data Display</span>
-      <span class="nav-link soon">Feedback</span>
-      <span class="nav-link soon">Layout &amp; Utility</span>
+      <a href="forms.html" class="nav-link">Forms</a>
+      <a href="navigation.html" class="nav-link">Navigation</a>
+      <a href="overlays.html" class="nav-link">Overlays</a>
+      <a href="data-display.html" class="nav-link">Data Display</a>
+      <a href="feedback.html" class="nav-link">Feedback</a>
+      <a href="layout-utility.html" class="nav-link">Layout &amp; Utility</a>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Themes</div>
@@ -116,14 +116,25 @@
     </section>
 
     <section class="c">
-      <div class="c-head"><h2>States</h2></div>
+      <div class="c-head"><h2>States</h2><p>All four are real, distinct CSS states now — hover it in the live preview above to feel the actual timing.</p></div>
       <div class="demo variant-grid">
         <div class="variant-cell"><button class="btn btn-default">Default</button><span class="lbl">rest</span></div>
-        <div class="variant-cell"><button class="btn btn-default" style="background:hsl(var(--primary)/.9)">Default</button><span class="lbl">hover (approximated — hover the live preview above to see the real transition)</span></div>
-        <div class="variant-cell"><button class="btn btn-default" disabled>Default</button><span class="lbl">disabled — native <span class="mono">disabled</span> attribute, 50% opacity</span></div>
+        <div class="variant-cell"><button class="btn btn-default" style="opacity:.88;transform:translateY(-1px)">Default</button><span class="lbl">hover — lifts 1px + 88% opacity (per-variant recipe below), 180ms ease</span></div>
+        <div class="variant-cell"><button class="btn btn-default" style="transform:translateY(1px)">Default</button><span class="lbl">active/press — settles 1px down, 120ms ease</span></div>
+        <div class="variant-cell"><button class="btn btn-default" disabled>Default</button><span class="lbl">disabled — native <span class="mono">disabled</span> attribute, 50% opacity, hover/active excluded via <span class="mono">:not(:disabled)</span></span></div>
         <div class="variant-cell"><button class="btn btn-default" style="outline:2px solid hsl(var(--ring));outline-offset:1px">Default</button><span class="lbl">focus-visible — tab to the live preview to see the real ring</span></div>
       </div>
-      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground))">Only <span class="mono">rest</span> and <span class="mono">disabled</span> are real, distinct CSS states today. Hover and focus above are staged approximations for side-by-side comparison — try the live preview section for the genuine interaction.</p>
+      <table style="margin-top:14px">
+        <thead><tr><th>Variant</th><th>Hover recipe</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">.btn-default</td><td>lift 1px, opacity → 88%</td></tr>
+          <tr><td class="mono">.btn-outline</td><td><span class="mono">--accent</span> background, lift 1px</td></tr>
+          <tr><td class="mono">.btn-secondary</td><td><span class="mono">--accent</span> background, lift 1px</td></tr>
+          <tr><td class="mono">.btn-ghost</td><td><span class="mono">--accent</span> background only — no lift</td></tr>
+          <tr><td class="mono">.btn-destructive</td><td>lift 1px, opacity → 88%</td></tr>
+          <tr><td class="mono">.btn-link</td><td>opacity → 75% only — no lift</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="c">
@@ -149,10 +160,12 @@
     <section class="c">
       <div class="c-head"><h2>Interaction notes</h2></div>
       <p style="font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;line-height:1.7">
-        Button has no JavaScript of its own — every state above is pure CSS on a native <span class="mono">&lt;button&gt;</span> element.
-        Hover and active feedback are only implemented for <span class="mono">.btn-ghost</span> today (a background fade on hover);
-        the other five variants have no explicit <span class="mono">:hover</span> rule in <span class="mono">components.css</span>, so
-        they render visually static until clicked. Worth flagging as a gap rather than assuming it was intentional.
+        Button has no JavaScript of its own — every state is pure CSS on a native <span class="mono">&lt;button&gt;</span> element.
+        Every variant now has both a hover and an active/press rule (see the recipe table above), each scoped with
+        <span class="mono">:hover:not(:disabled)</span> / <span class="mono">:active:not(:disabled)</span> so a disabled button never
+        animates. A shared base transition (<span class="mono">background-color, border-color, color, transform, opacity</span> —
+        defined once in <span class="mono">base.css</span> and reused by several other components) drives the timing, so hover/press
+        feedback is consistent across the whole system rather than per-component.
       </p>
     </section>
 
