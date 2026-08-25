@@ -269,6 +269,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Icon gallery filter (Foundations > Icons) — same substring-match pattern as the Command palette filter above
+  var iconSearch = document.getElementById('iconSearch'), iconCount = document.getElementById('iconCount');
+  if (iconSearch) {
+    var allIconCards = document.querySelectorAll('.icon-card');
+    function applyIconFilter() {
+      var q = iconSearch.value.toLowerCase();
+      var shown = 0;
+      allIconCards.forEach(function (c) {
+        var match = c.dataset.name.includes(q);
+        c.classList.toggle('hide', !match);
+        if (match) shown++;
+      });
+      if (iconCount) iconCount.textContent = shown + ' of ' + allIconCards.length + ' icons';
+    }
+    iconSearch.addEventListener('input', applyIconFilter);
+    applyIconFilter();
+  }
+
   // Direction toggle (RTL / LTR) — lives on Usage > Guidelines now
   var dirToggle = document.getElementById('dirToggle'), dirDemo = document.getElementById('dirDemo');
   if (dirToggle && dirDemo) {
