@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
+<title>Colors — fleeting design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="../index.html" style="text-decoration:none">
+    <svg viewBox="0 0 517 389"><path d="M193.097 0.44C227.823-0.52 267.013 0.39 302.053 0.36L516.738 0.37C475.028 40.93 434.07 83.39 392.676 124.38 353.464 163.21 324.742 155.57 274.111 155.51L198.995 155.42C195.37 155.39 191.745 155.42 188.121 155.52 152.104 156.47 117.454 169.51 89.752 192.54 81.634 199.35 73.569 207.6 66.148 215.22 44.417 237.54 21.408 259.05 0 281.62L32.703 163.55C38.44 142.8 46.282 110.32 54.609 91.61 61.407 76.54 70.591 62.67 81.807 50.53 111.735 18.23 149.467 2.17 193.097 0.44Z"/><path d="M338.917 249.69C338.814 250.96 336.369 253.04 335.267 254.16L261.566 327.82C250.955 338.45 228.957 361.56 218.427 369.86 210.593 376.11 201.681 380.87 192.133 383.91 171.928 390.37 128.647 388.25 105.475 388.25L17.19 388.36C17.182 387.1 19.586 385 20.662 383.91L95.405 309.24C107.037 297.59 129.218 274.15 140.882 265.64 149.693 259.31 159.648 254.75 170.195 252.22 185.482 248.49 218.536 249.82 235.974 249.82L338.917 249.69Z"/></svg>
+    fleeting
+  </a>
+  <span class="grow"></span>
+  <span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">design system · living documentation</span>
+  <div class="theme-tgl">
+    <button data-th="light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button data-th="dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="side-nav">
+    <div class="nav-group"><a href="../index.html" class="nav-link top-level">Overview</a></div>
+    <div class="nav-group">
+      <div class="nav-group-label">Foundations</div>
+      <a href="colors.html" class="nav-link">Colors</a>
+      <a href="typography.html" class="nav-link">Typography</a>
+      <a href="spacing.html" class="nav-link">Spacing</a>
+      <a href="borders-radius.html" class="nav-link">Borders &amp; Radius</a>
+      <a href="shadows.html" class="nav-link">Shadows</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Components</div>
+      <a href="../components/actions.html" class="nav-link">Actions</a>
+      <span class="nav-link soon">Forms</span>
+      <span class="nav-link soon">Navigation</span>
+      <span class="nav-link soon">Overlays</span>
+      <span class="nav-link soon">Data Display</span>
+      <span class="nav-link soon">Feedback</span>
+      <span class="nav-link soon">Layout &amp; Utility</span>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Themes</div>
+      <a href="../themes/light.html" class="nav-link">Light</a>
+      <a href="../themes/dark.html" class="nav-link">Dark</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Usage</div>
+      <a href="../usage/principles.html" class="nav-link">Principles</a>
+      <a href="../usage/accessibility.html" class="nav-link">Accessibility</a>
+      <a href="../usage/guidelines.html" class="nav-link">Guidelines</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Foundations</span><span>/</span><span class="cur">Colors</span></nav>
+
+    <div class="intro">
+      <div class="kicker">// foundations</div>
+      <h1>Colors</h1>
+      <p>Every color in the system is an HSL custom property, referenced as <span class="mono">hsl(var(--token))</span> — never a hardcoded value. Each swatch below shows its light value and its dark value side by side, independent of the site's current theme toggle, so both are visible at once.</p>
+    </div>
+
+    <section class="c">
+      <div class="c-head"><span class="n">01</span><h2>Background &amp; surface</h2></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--background))"></div><div data-theme="dark" style="background:hsl(var(--background))"></div></div><div class="swatch-meta"><div class="name">--background</div><div class="val">L 0 0% 100% · D 0 0% 0%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--foreground))"></div><div data-theme="dark" style="background:hsl(var(--foreground))"></div></div><div class="swatch-meta"><div class="name">--foreground</div><div class="val">L 240 10% 3.9% · D 0 0% 92%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--card))"></div><div data-theme="dark" style="background:hsl(var(--card))"></div></div><div class="swatch-meta"><div class="name">--card</div><div class="val">L 0 0% 100% · D 0 0% 6%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--card-foreground))"></div><div data-theme="dark" style="background:hsl(var(--card-foreground))"></div></div><div class="swatch-meta"><div class="name">--card-foreground</div><div class="val">same as --foreground</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--popover))"></div><div data-theme="dark" style="background:hsl(var(--popover))"></div></div><div class="swatch-meta"><div class="name">--popover</div><div class="val">L 0 0% 100% · D 0 0% 6%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--popover-foreground))"></div><div data-theme="dark" style="background:hsl(var(--popover-foreground))"></div></div><div class="swatch-meta"><div class="name">--popover-foreground</div><div class="val">same as --foreground</div></div></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">02</span><h2>Primary, secondary, muted, accent</h2></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--primary))"></div><div data-theme="dark" style="background:hsl(var(--primary))"></div></div><div class="swatch-meta"><div class="name">--primary</div><div class="val">L 240 5.9% 10% · D 0 0% 92%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--primary-foreground))"></div><div data-theme="dark" style="background:hsl(var(--primary-foreground))"></div></div><div class="swatch-meta"><div class="name">--primary-foreground</div><div class="val">L 0 0% 98% · D 0 0% 6%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--secondary))"></div><div data-theme="dark" style="background:hsl(var(--secondary))"></div></div><div class="swatch-meta"><div class="name">--secondary</div><div class="val">L 240 4.8% 95.9% · D 0 0% 11%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--secondary-foreground))"></div><div data-theme="dark" style="background:hsl(var(--secondary-foreground))"></div></div><div class="swatch-meta"><div class="name">--secondary-foreground</div><div class="val">same as --primary</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--muted))"></div><div data-theme="dark" style="background:hsl(var(--muted))"></div></div><div class="swatch-meta"><div class="name">--muted</div><div class="val">same as --secondary</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--muted-foreground))"></div><div data-theme="dark" style="background:hsl(var(--muted-foreground))"></div></div><div class="swatch-meta"><div class="name">--muted-foreground</div><div class="val">L 240 3.8% 46.1% · D 0 0% 62%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--accent))"></div><div data-theme="dark" style="background:hsl(var(--accent))"></div></div><div class="swatch-meta"><div class="name">--accent</div><div class="val">L 240 4.8% 95.9% · D 0 0% 14%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--accent-foreground))"></div><div data-theme="dark" style="background:hsl(var(--accent-foreground))"></div></div><div class="swatch-meta"><div class="name">--accent-foreground</div><div class="val">same as --primary</div></div></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">03</span><h2>Destructive</h2><p>Used for the destructive button, badge, and alert variants.</p></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--destructive))"></div><div data-theme="dark" style="background:hsl(var(--destructive))"></div></div><div class="swatch-meta"><div class="name">--destructive</div><div class="val">L 0 72% 51% · D 0 55% 48%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--destructive-foreground))"></div><div data-theme="dark" style="background:hsl(var(--destructive-foreground))"></div></div><div class="swatch-meta"><div class="name">--destructive-foreground</div><div class="val">0 0% 98% in both themes</div></div></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">04</span><h2>Borders &amp; focus ring</h2></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--border))"></div><div data-theme="dark" style="background:hsl(var(--border))"></div></div><div class="swatch-meta"><div class="name">--border</div><div class="val">L 240 5.9% 90% · D 0 0% 16%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--input))"></div><div data-theme="dark" style="background:hsl(var(--input))"></div></div><div class="swatch-meta"><div class="name">--input</div><div class="val">same as --border</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--ring))"></div><div data-theme="dark" style="background:hsl(var(--ring))"></div></div><div class="swatch-meta"><div class="name">--ring</div><div class="val">L 240 5.9% 10% · D 0 0% 65%</div></div></div>
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">05</span><h2>Chart</h2><p>Defined in both themes. Only <span class="mono">--chart-info</span> is actually used today (chart bars, one avatar fill) — <span class="mono">--chart-ok</span>, <span class="mono">--chart-warn</span> and <span class="mono">--chart-claim</span> exist in the token set but aren't wired into any component yet. Documented here as-is rather than hidden.</p></div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-ok))"></div><div data-theme="dark" style="background:hsl(var(--chart-ok))"></div></div><div class="swatch-meta"><div class="name">--chart-ok <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 158 64% 32% · D 158 55% 50%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-warn))"></div><div data-theme="dark" style="background:hsl(var(--chart-warn))"></div></div><div class="swatch-meta"><div class="name">--chart-warn <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 32 90% 40% · D 32 85% 60%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-info))"></div><div data-theme="dark" style="background:hsl(var(--chart-info))"></div></div><div class="swatch-meta"><div class="name">--chart-info</div><div class="val">L 217 80% 56% · D 217 85% 70%</div></div></div>
+        <div class="swatch"><div class="swatch-row"><div data-theme="light" style="background:hsl(var(--chart-claim))"></div><div data-theme="dark" style="background:hsl(var(--chart-claim))"></div></div><div class="swatch-meta"><div class="name">--chart-claim <span class="badge badge-outline" style="margin-left:4px">unused</span></div><div class="val">L 255 60% 55% · D 255 75% 76%</div></div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../assets/js/theme.js" defer></script>
+<script src="../assets/js/nav.js" defer></script>
+<script src="../assets/js/components.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('fleeting-theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;}}catch(e){}})();</script>
+<title>Accessibility — fleeting design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="../index.html" style="text-decoration:none">
+    <svg viewBox="0 0 517 389"><path d="M193.097 0.44C227.823-0.52 267.013 0.39 302.053 0.36L516.738 0.37C475.028 40.93 434.07 83.39 392.676 124.38 353.464 163.21 324.742 155.57 274.111 155.51L198.995 155.42C195.37 155.39 191.745 155.42 188.121 155.52 152.104 156.47 117.454 169.51 89.752 192.54 81.634 199.35 73.569 207.6 66.148 215.22 44.417 237.54 21.408 259.05 0 281.62L32.703 163.55C38.44 142.8 46.282 110.32 54.609 91.61 61.407 76.54 70.591 62.67 81.807 50.53 111.735 18.23 149.467 2.17 193.097 0.44Z"/><path d="M338.917 249.69C338.814 250.96 336.369 253.04 335.267 254.16L261.566 327.82C250.955 338.45 228.957 361.56 218.427 369.86 210.593 376.11 201.681 380.87 192.133 383.91 171.928 390.37 128.647 388.25 105.475 388.25L17.19 388.36C17.182 387.1 19.586 385 20.662 383.91L95.405 309.24C107.037 297.59 129.218 274.15 140.882 265.64 149.693 259.31 159.648 254.75 170.195 252.22 185.482 248.49 218.536 249.82 235.974 249.82L338.917 249.69Z"/></svg>
+    fleeting
+  </a>
+  <span class="grow"></span>
+  <span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">design system · living documentation</span>
+  <div class="theme-tgl">
+    <button data-th="light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button data-th="dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="side-nav">
+    <div class="nav-group"><a href="../index.html" class="nav-link top-level">Overview</a></div>
+    <div class="nav-group">
+      <div class="nav-group-label">Foundations</div>
+      <a href="../foundations/colors.html" class="nav-link">Colors</a>
+      <a href="../foundations/typography.html" class="nav-link">Typography</a>
+      <a href="../foundations/spacing.html" class="nav-link">Spacing</a>
+      <a href="../foundations/borders-radius.html" class="nav-link">Borders &amp; Radius</a>
+      <a href="../foundations/shadows.html" class="nav-link">Shadows</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Components</div>
+      <a href="../components/actions.html" class="nav-link">Actions</a>
+      <span class="nav-link soon">Forms</span>
+      <span class="nav-link soon">Navigation</span>
+      <span class="nav-link soon">Overlays</span>
+      <span class="nav-link soon">Data Display</span>
+      <span class="nav-link soon">Feedback</span>
+      <span class="nav-link soon">Layout &amp; Utility</span>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Themes</div>
+      <a href="../themes/light.html" class="nav-link">Light</a>
+      <a href="../themes/dark.html" class="nav-link">Dark</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Usage</div>
+      <a href="principles.html" class="nav-link">Principles</a>
+      <a href="accessibility.html" class="nav-link">Accessibility</a>
+      <a href="guidelines.html" class="nav-link">Guidelines</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <nav class="crumb page-crumb"><a href="../index.html">Home</a><span>/</span><span class="cur">Usage</span><span>/</span><span class="cur">Accessibility</span></nav>
+
+    <div class="intro">
+      <div class="kicker">// usage</div>
+      <h1>Accessibility</h1>
+      <p>An honest inventory, not a checklist claiming compliance. Every item below was verified against the actual markup and CSS — nothing here is assumed or aspirational.</p>
+    </div>
+
+    <div class="a11y-group">
+      <div class="a11y-head"><span class="badge badge-secondary">Already implemented</span></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Global focus-visible ring</b><span>One shared <span class="mono">:focus-visible{outline:2px solid hsl(var(--ring))}</span> rule in <span class="mono">base.css</span>, applied consistently — no per-component ring styling to drift.</span></div>
+        <div class="a11y-item"><b>Native interactive elements</b><span>Buttons, inputs, textareas and the native select are real <span class="mono">&lt;button&gt;</span> / <span class="mono">&lt;input&gt;</span> / <span class="mono">&lt;select&gt;</span> elements — keyboard focus and activation work with zero extra code.</span></div>
+        <div class="a11y-item"><b>Native disabled state</b><span>Disabled buttons use the real <span class="mono">disabled</span> attribute, correctly removed from the tab order and announced by assistive tech.</span></div>
+        <div class="a11y-item"><b>High base contrast</b><span>Primary text against background is very high contrast in both themes by construction (near-black on white; near-white on true black) — comfortably passes WCAG AA/AAA for normal text.</span></div>
+      </div>
+    </div>
+
+    <div class="a11y-group">
+      <div class="a11y-head"><span class="badge badge-outline">Needs improvement</span></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Custom checkbox, switch, radio and toggle are not keyboard-operable</b><span>They're plain <span class="mono">&lt;span&gt;</span> elements driven by <span class="mono">onclick</span>, with no <span class="mono">tabindex</span> — a keyboard-only user cannot reach or activate them at all today, not even with the wrong announcement; they're simply skipped.</span></div>
+        <div class="a11y-item"><b>No ARIA roles or state on custom controls</b><span>No <span class="mono">role="checkbox"/"switch"/"radio"</span>, no <span class="mono">aria-checked</span> — a screen reader has nothing to announce for these controls beyond "clickable".</span></div>
+        <div class="a11y-item"><b>Menu items and tabs carry no ARIA relationship</b><span><span class="mono">.menu-item</span> is a plain <span class="mono">&lt;div&gt;</span> (no <span class="mono">role="menuitem"</span>); <span class="mono">.tabstrig</span>/<span class="mono">.tabpanel</span> have no <span class="mono">role="tab"/"tabpanel"</span> or <span class="mono">aria-selected</span> linking them.</span></div>
+        <div class="a11y-item"><b>No Escape-to-close on any overlay</b><span>Dialog, Alert Dialog, Drawer, Dropdown, Popover, Select and Context Menu all close only via outside-click or an explicit button — never via the Escape key, which is the expected keyboard affordance for a dismissible surface.</span></div>
+        <div class="a11y-item"><b>Icon-only buttons have no accessible name</b><span>The <span class="mono">.btn-icon</span> example ships with no visible text and no <span class="mono">aria-label</span> — a screen reader announces an unlabeled button.</span></div>
+      </div>
+    </div>
+
+    <div class="a11y-group">
+      <div class="a11y-head"><span class="badge badge-destructive">Recommended before production</span></div>
+      <div class="a11y-list">
+        <div class="a11y-item"><b>Real keyboard operability for every custom control</b><span>Checkbox, Switch, Radio, Toggle, Menu items, Tabs and Accordion triggers need focus + Enter/Space activation — either by rebuilding on native elements or by adding <span class="mono">tabindex</span>, key handlers, and ARIA roles/state.</span></div>
+        <div class="a11y-item"><b>Focus trapping in modal surfaces</b><span>Dialog and Alert Dialog currently let keyboard focus tab straight out into the page behind them — a real focus trap is needed before either ships in a live product.</span></div>
+        <div class="a11y-item"><b>Escape-to-close on every dismissible overlay</b><span>A single shared keydown handler would cover Dialog, Drawer, Dropdown, Popover, Select, Context Menu and Command consistently.</span></div>
+        <div class="a11y-item"><b>A real contrast audit</b><span>Primary text passes by eye, but <span class="mono">--muted-foreground</span> against various backgrounds hasn't been run through an actual contrast checker (e.g. axe or a WCAG contrast tool) — do that before relying on the "looks fine" assessment above.</span></div>
+        <div class="a11y-item"><b>Mandatory labeling for icon-only buttons</b><span>Every icon-only button instance going forward should require a visible label or an <span class="mono">aria-label</span> — this demo catalogue is fine for design exploration, but the interaction layer isn't production-accessible yet.</span></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../assets/js/theme.js" defer></script>
+<script src="../assets/js/nav.js" defer></script>
+<script src="../assets/js/components.js" defer></script>
+</body>
+</html>

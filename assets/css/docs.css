@@ -1,0 +1,155 @@
+/*
+  Documentation shell — the site chrome around the design system, not the
+  design system itself.
+
+  Two kinds of rule live here:
+   1. Original catalogue chrome, ported as-is (.top / .brand / .theme-tgl /
+      .shell / .main / .intro / section.c / .c-head / .demo) — this is the
+      exact header, page-shell and section-framing pattern the original file
+      already used, just no longer tied to one scrolling page.
+   2. New, additive-only patterns needed for a multi-page docs site (grouped
+      sidebar nav, category cards, swatches, stat rows, theme-compare panels,
+      variant grids, class-reference chips). Every new pattern below composes
+      EXISTING tokens and, wherever one already existed for the job, an
+      existing component class (.card, .badge, .crumb, table/th/td) rather
+      than inventing new color or shape language.
+*/
+
+/* ---- 1. Ported chrome ---- */
+
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;padding:0 22px;height:52px;border-bottom:1px solid hsl(var(--border));background:hsl(var(--background));}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;}
+.brand svg{width:19px;height:14px;fill:hsl(var(--foreground));}
+.top .grow{flex:1;}
+.theme-tgl{display:flex;border:1px solid hsl(var(--border));}
+.theme-tgl button{width:30px;height:26px;display:grid;place-items:center;color:hsl(var(--muted-foreground));}
+.theme-tgl button.on{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.theme-tgl svg{width:13px;height:13px;}
+
+.shell{display:grid;grid-template-columns:220px 1fr;max-width:1360px;margin:0 auto;}
+@media(max-width:900px){.shell{grid-template-columns:1fr;} .side-nav{display:none;}}
+
+.main{padding:32px 30px 120px;max-width:960px;}
+.intro h1{font-size:20px;font-weight:700;letter-spacing:-.01em;}
+.intro p{margin-top:8px;color:hsl(var(--muted-foreground));font-size:13px;max-width:64ch;}
+.intro .kicker{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:hsl(var(--muted-foreground));text-transform:uppercase;}
+
+section.c{padding:38px 0;border-bottom:1px solid hsl(var(--border));scroll-margin-top:64px;}
+section.c:last-child{border-bottom:none;}
+.c-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;}
+.c-head h2{font-size:15px;font-weight:700;}
+.c-head .n{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(var(--muted-foreground));}
+.c-head p{margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground));}
+.demo{border:1px solid hsl(var(--border));background:hsl(var(--card));padding:20px;}
+
+/* ---- 2. Sidebar navigation (new structure, ported visual language) ---- */
+
+.side-nav{position:sticky;top:52px;align-self:start;height:calc(100vh - 52px);overflow-y:auto;padding:22px 12px 40px;border-right:1px solid hsl(var(--border));}
+.nav-group{margin-bottom:18px;}
+.nav-group-label{padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:hsl(var(--muted-foreground)/.7);}
+.nav-link{display:block;padding:5px 10px;font-size:12px;color:hsl(var(--muted-foreground));border-left:2px solid transparent;text-decoration:none;}
+.nav-link:hover{color:hsl(var(--foreground));background:hsl(var(--accent));}
+.nav-link.on{color:hsl(var(--foreground));font-weight:600;border-left-color:hsl(var(--primary));background:hsl(var(--accent));}
+.nav-link.soon{opacity:.45;cursor:not-allowed;}
+.nav-link.soon:hover{background:none;color:hsl(var(--muted-foreground));}
+.nav-link.top-level{font-weight:600;color:hsl(var(--foreground));}
+
+/* ---- 3. Breadcrumb (reuses .crumb from components.css) ---- */
+
+.page-crumb{margin-bottom:18px;}
+
+/* ---- 4. Entry-point / category / component-index cards ---- */
+
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.grid-cards .card{display:flex;flex-direction:column;height:100%;}
+.grid-cards .card a.card-link{color:inherit;text-decoration:none;display:block;}
+.grid-cards .card.soon{opacity:.5;}
+.grid-cards .card .ch{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+
+/* ---- 5. Overview stat row ---- */
+
+.stat-row{display:flex;gap:36px;flex-wrap:wrap;}
+.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;letter-spacing:-.02em;}
+.stat span{display:block;margin-top:4px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:hsl(var(--muted-foreground));}
+
+/* ---- 6. Forced-theme comparison panel (Overview + Themes pages) ---- */
+
+.theme-compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid hsl(var(--border));}
+@media(max-width:640px){.theme-compare{grid-template-columns:1fr;}}
+.theme-compare .tc-pane{padding:22px;background:hsl(var(--background));color:hsl(var(--foreground));}
+.theme-compare .tc-pane+.tc-pane{border-left:1px solid hsl(var(--border));}
+@media(max-width:640px){.theme-compare .tc-pane+.tc-pane{border-left:none;border-top:1px solid hsl(var(--border));}}
+.theme-compare .tc-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-bottom:14px;}
+
+/* ---- 7. Token swatches (Foundations > Colors) ---- */
+
+.swatch{border:1px solid hsl(var(--border));}
+.swatch-row{display:flex;}
+.swatch-row>div{flex:1;height:56px;}
+.swatch-meta{padding:9px 11px;border-top:1px solid hsl(var(--border));background:hsl(var(--card));}
+.swatch-meta .name{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;}
+.swatch-meta .val{margin-top:2px;font-family:'JetBrains Mono',monospace;font-size:10px;color:hsl(var(--muted-foreground));}
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+
+/* ---- 8. Type ramp rows (Foundations > Typography) ---- */
+
+.type-row{display:flex;align-items:baseline;gap:18px;padding:16px 0;border-bottom:1px solid hsl(var(--border));}
+.type-row:last-child{border-bottom:none;}
+.type-row .sample{flex:1;min-width:0;}
+.type-row .meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(var(--muted-foreground));white-space:nowrap;}
+
+/* ---- 9. Spacing rulers (Foundations > Spacing) ---- */
+
+.space-row{display:flex;align-items:center;gap:14px;padding:7px 0;}
+.space-row .space-bar{height:14px;background:hsl(var(--primary));flex:none;}
+.space-row .val{width:56px;font-family:'JetBrains Mono',monospace;font-size:11px;color:hsl(var(--muted-foreground));}
+
+/* ---- 10. Shadow / radius sample tiles ---- */
+
+.tile-row{display:flex;gap:20px;flex-wrap:wrap;}
+.tile{width:140px;height:90px;background:hsl(var(--popover));display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(var(--muted-foreground));text-align:center;padding:8px;}
+
+/* ---- 11. Variant / states grid (component detail pages) ---- */
+
+.variant-grid{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;}
+.variant-cell{display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+.variant-cell .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(var(--muted-foreground));}
+
+/* ---- 12. Inline code chip + anatomy block ---- */
+
+.code-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;background:hsl(var(--secondary));color:hsl(var(--secondary-foreground));padding:2px 6px;}
+.anatomy-block{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;background:hsl(var(--accent)/.4);border:1px solid hsl(var(--border));padding:14px 16px;white-space:pre;overflow-x:auto;}
+
+/* ---- 13. Related-components row ---- */
+
+.related-list{display:flex;gap:8px;flex-wrap:wrap;}
+.related-list a{border:1px solid hsl(var(--border));padding:5px 11px;font-size:11.5px;text-decoration:none;color:hsl(var(--foreground));}
+.related-list a:hover{background:hsl(var(--accent));}
+.related-list span.soon{display:inline-block;border:1px solid hsl(var(--border));padding:5px 11px;font-size:11.5px;color:hsl(var(--muted-foreground));opacity:.6;}
+
+/* ---- 14. Generic "not built yet" utility ---- */
+
+.soon{opacity:.5;cursor:not-allowed;}
+
+/* ---- 15. Usage pages: principle cards + accessibility status groups ---- */
+
+.principle{padding:20px 0;border-bottom:1px solid hsl(var(--border));}
+.principle:last-child{border-bottom:none;}
+.principle h3{font-size:14px;font-weight:600;}
+.principle p{margin-top:6px;font-size:12.5px;color:hsl(var(--muted-foreground));max-width:68ch;}
+
+.a11y-group{margin-bottom:34px;}
+.a11y-group .a11y-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.a11y-group h2{font-size:14.5px;font-weight:700;}
+.a11y-list{display:flex;flex-direction:column;gap:0;border:1px solid hsl(var(--border));}
+.a11y-item{padding:12px 14px;border-bottom:1px solid hsl(var(--border));font-size:12.5px;}
+.a11y-item:last-child{border-bottom:none;}
+.a11y-item b{display:block;font-weight:600;margin-bottom:3px;}
+.a11y-item span{color:hsl(var(--muted-foreground));font-size:12px;}
+
+.guide-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1px solid hsl(var(--border));margin-top:12px;}
+.guide-compare>div{padding:16px;border-left:1px solid hsl(var(--border));}
+.guide-compare>div:first-child{border-left:none;}
+.guide-compare h4{font-size:12.5px;font-weight:600;margin-bottom:6px;}
+.guide-compare p{font-size:12px;color:hsl(var(--muted-foreground));}
+@media(max-width:640px){.guide-compare{grid-template-columns:1fr;} .guide-compare>div{border-left:none;border-top:1px solid hsl(var(--border));} .guide-compare>div:first-child{border-top:none;}}

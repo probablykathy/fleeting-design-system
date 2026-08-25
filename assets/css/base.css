@@ -1,0 +1,9 @@
+/* Global reset and base element styles — ported verbatim from the original catalogue. */
+
+*{box-sizing:border-box;margin:0;padding:0;border-color:hsl(var(--border));}
+button{-webkit-appearance:none;appearance:none;background:none;border:0;font:inherit;color:inherit;cursor:pointer;}
+body{background:hsl(var(--background));color:hsl(var(--foreground));font-family:'Inter',system-ui,sans-serif;font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
+a{color:inherit;}
+.mono{font-family:'JetBrains Mono',monospace;}
+::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:hsl(var(--border));} ::-webkit-scrollbar-track{background:transparent;}
+:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:1px;}
