@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleeting — Component Library (shadcn/ui)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="light"]{
+  --background:0 0% 100%; --foreground:240 10% 3.9%;
+  --card:0 0% 100%; --card-foreground:240 10% 3.9%;
+  --popover:0 0% 100%; --popover-foreground:240 10% 3.9%;
+  --primary:240 5.9% 10%; --primary-foreground:0 0% 98%;
+  --secondary:240 4.8% 95.9%; --secondary-foreground:240 5.9% 10%;
+  --muted:240 4.8% 95.9%; --muted-foreground:240 3.8% 46.1%;
+  --accent:240 4.8% 95.9%; --accent-foreground:240 5.9% 10%;
+  --destructive:0 72% 51%; --destructive-foreground:0 0% 98%;
+  --border:240 5.9% 90%; --input:240 5.9% 90%; --ring:240 5.9% 10%;
+  --chart-ok:158 64% 32%; --chart-warn:32 90% 40%; --chart-info:217 80% 56%; --chart-claim:255 60% 55%;
+  --radius:0rem;
+}
+:root[data-theme="dark"]{
+  --background:0 0% 0%; --foreground:0 0% 92%;
+  --card:0 0% 6%; --card-foreground:0 0% 92%;
+  --popover:0 0% 6%; --popover-foreground:0 0% 92%;
+  --primary:0 0% 92%; --primary-foreground:0 0% 6%;
+  --secondary:0 0% 11%; --secondary-foreground:0 0% 92%;
+  --muted:0 0% 11%; --muted-foreground:0 0% 62%;
+  --accent:0 0% 14%; --accent-foreground:0 0% 92%;
+  --destructive:0 55% 48%; --destructive-foreground:0 0% 98%;
+  --border:0 0% 16%; --input:0 0% 16%; --ring:0 0% 65%;
+  --chart-ok:158 55% 50%; --chart-warn:32 85% 60%; --chart-info:217 85% 70%; --chart-claim:255 75% 76%;
+  --radius:0rem;
+}
+*{box-sizing:border-box;margin:0;padding:0;border-color:hsl(var(--border));}
+button{-webkit-appearance:none;appearance:none;background:none;border:0;font:inherit;color:inherit;cursor:pointer;}
+body{background:hsl(var(--background));color:hsl(var(--foreground));font-family:'Inter',system-ui,sans-serif;font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;}
+.mono{font-family:'JetBrains Mono',monospace;}
+::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:hsl(var(--border));} ::-webkit-scrollbar-track{background:transparent;}
+:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:1px;}
+
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;padding:0 22px;height:52px;border-bottom:1px solid hsl(var(--border));background:hsl(var(--background));}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;}
+.brand svg{width:19px;height:14px;fill:hsl(var(--foreground));}
+.top .grow{flex:1;}
+.theme-tgl{display:flex;border:1px solid hsl(var(--border));}
+.theme-tgl button{width:30px;height:26px;display:grid;place-items:center;color:hsl(var(--muted-foreground));}
+.theme-tgl button.on{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.theme-tgl svg{width:13px;height:13px;}
+
+.shell{display:grid;grid-template-columns:220px 1fr;max-width:1360px;margin:0 auto;}
+@media(max-width:900px){.shell{grid-template-columns:1fr;} .toc{display:none;}}
+.toc{position:sticky;top:52px;align-self:start;height:calc(100vh - 52px);overflow-y:auto;padding:22px 12px;border-right:1px solid hsl(var(--border));}
+.toc a{display:block;padding:5px 10px;font-size:12px;color:hsl(var(--muted-foreground));border-left:2px solid transparent;}
+.toc a:hover{color:hsl(var(--foreground));background:hsl(var(--accent));}
+.toc a.on{color:hsl(var(--foreground));font-weight:600;border-left-color:hsl(var(--primary));background:hsl(var(--accent));}
+
+.main{padding:32px 30px 120px;max-width:960px;}
+.intro h1{font-size:20px;font-weight:700;letter-spacing:-.01em;}
+.intro p{margin-top:8px;color:hsl(var(--muted-foreground));font-size:13px;max-width:64ch;}
+.intro .kicker{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:hsl(var(--muted-foreground));text-transform:uppercase;}
+
+section.c{padding:38px 0;border-bottom:1px solid hsl(var(--border));scroll-margin-top:64px;}
+section.c:last-child{border-bottom:none;}
+.c-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;}
+.c-head h2{font-size:15px;font-weight:700;}
+.c-head .n{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(var(--muted-foreground));}
+.c-head p{margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground));}
+.demo{border:1px solid hsl(var(--border));background:hsl(var(--card));padding:20px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 13px;font-size:12px;font-weight:500;border:1px solid transparent;white-space:nowrap;}
+.btn svg{width:14px;height:14px;}
+.btn-default{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.btn-outline{background:hsl(var(--background));border-color:hsl(var(--input));color:hsl(var(--foreground));}
+.btn-secondary{background:hsl(var(--secondary));color:hsl(var(--secondary-foreground));}
+.btn-ghost{background:transparent;}
+.btn-ghost:hover{background:hsl(var(--accent));}
+.btn-destructive{background:hsl(var(--destructive));color:hsl(var(--destructive-foreground));}
+.btn-link{color:hsl(var(--primary));text-decoration:underline;height:auto;}
+.btn-sm{height:28px;padding:0 10px;font-size:11.5px;}
+.btn-lg{height:36px;padding:0 18px;font-size:13px;}
+.btn-icon{width:32px;height:32px;padding:0;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+.btngroup{display:inline-flex;}
+.btngroup .btn{border-radius:0;margin-left:-1px;}
+.btngroup .btn:first-child{margin-left:0;}
+
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:2px 9px;border:1px solid transparent;font-family:'JetBrains Mono',monospace;}
+.badge-default{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.badge-secondary{background:hsl(var(--secondary));color:hsl(var(--secondary-foreground));}
+.badge-outline{background:transparent;border-color:hsl(var(--border));color:hsl(var(--foreground));}
+.badge-destructive{background:hsl(var(--destructive));color:hsl(var(--destructive-foreground));}
+
+.card{border:1px solid hsl(var(--border));background:hsl(var(--card));}
+.card .ch{padding:16px;border-bottom:1px solid hsl(var(--border));}
+.card .ch h3{font-size:13.5px;font-weight:600;}
+.card .ch p{margin-top:3px;font-size:11.5px;color:hsl(var(--muted-foreground));}
+.card .cb{padding:16px;font-size:12.5px;color:hsl(var(--muted-foreground));}
+.card .cf{padding:14px 16px;border-top:1px solid hsl(var(--border));display:flex;gap:8px;justify-content:flex-end;}
+
+.avatar{width:34px;height:34px;border-radius:50%;background:hsl(var(--secondary));display:grid;place-items:center;font-size:11px;font-weight:600;overflow:hidden;}
+
+.sep{height:1px;background:hsl(var(--border));border:none;}
+.sep-v{width:1px;background:hsl(var(--border));align-self:stretch;}
+
+.alert{border:1px solid hsl(var(--border));padding:12px 14px;font-size:12px;display:flex;gap:10px;}
+.alert svg{width:16px;height:16px;flex:none;margin-top:1px;}
+.alert.destructive{border-color:hsl(var(--destructive)/.4);color:hsl(var(--destructive));}
+.alert .at{font-weight:600;margin-bottom:2px;}
+
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:11px;font-weight:500;color:hsl(var(--muted-foreground));padding:9px 12px;border-bottom:1px solid hsl(var(--border));}
+td{padding:10px 12px;border-bottom:1px solid hsl(var(--border));font-size:12.5px;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:hsl(var(--accent)/.5);}
+
+.tabslist{display:inline-flex;background:hsl(var(--secondary));padding:3px;gap:2px;}
+.tabstrig{padding:6px 13px;font-size:12px;font-weight:500;color:hsl(var(--muted-foreground));}
+.tabstrig.on{background:hsl(var(--background));color:hsl(var(--foreground));}
+.tabpanel{display:none;padding-top:14px;font-size:12.5px;color:hsl(var(--muted-foreground));}
+.tabpanel.on{display:block;}
+
+.acc-item{border-bottom:1px solid hsl(var(--border));}
+.acc-trig{width:100%;display:flex;justify-content:space-between;align-items:center;padding:13px 2px;font-size:13px;font-weight:500;text-align:left;}
+.acc-trig svg{width:15px;height:15px;transition:transform .2s;color:hsl(var(--muted-foreground));}
+.acc-item.open .acc-trig svg{transform:rotate(180deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.acc-item.open .acc-body{max-height:200px;}
+.acc-body p{padding:0 2px 14px;font-size:12.5px;color:hsl(var(--muted-foreground));}
+
+.cbx{width:16px;height:16px;border:1px solid hsl(var(--input));display:inline-grid;place-items:center;cursor:pointer;}
+.cbx.on{background:hsl(var(--primary));border-color:hsl(var(--primary));}
+.cbx svg{width:10px;height:10px;color:hsl(var(--primary-foreground));display:none;}
+.cbx.on svg{display:block;}
+.rdo{width:16px;height:16px;border-radius:50%;border:1px solid hsl(var(--input));display:inline-grid;place-items:center;cursor:pointer;}
+.rdo.on::after{content:'';width:8px;height:8px;border-radius:50%;background:hsl(var(--primary));}
+.sw{width:36px;height:20px;border:1px solid hsl(var(--input));background:hsl(var(--input));position:relative;cursor:pointer;flex:none;}
+.sw .kn{width:16px;height:16px;background:hsl(var(--background));position:absolute;top:1px;left:1px;transition:left .15s;}
+.sw.on{background:hsl(var(--primary));}
+.sw.on .kn{left:17px;}
+.tgl-btn{height:32px;padding:0 12px;border:1px solid transparent;font-size:12px;}
+.tgl-btn.on{background:hsl(var(--accent));}
+.tglgroup{display:inline-flex;border:1px solid hsl(var(--border));}
+.tglgroup .tgl-btn{border-right:1px solid hsl(var(--border));}
+.tglgroup .tgl-btn:last-child{border-right:none;}
+
+.field{display:flex;flex-direction:column;gap:6px;max-width:340px;}
+.field label{font-size:12px;font-weight:500;}
+.field .hint{font-size:11px;color:hsl(var(--muted-foreground));}
+
+.inp{height:32px;padding:0 10px;border:1px solid hsl(var(--input));background:hsl(var(--background));color:hsl(var(--foreground));font-size:12.5px;width:100%;outline:none;}
+.inp:focus{border-color:hsl(var(--ring));}
+textarea.inp{height:76px;padding:8px 10px;resize:vertical;font-family:inherit;}
+.inp-group{display:flex;align-items:stretch;border:1px solid hsl(var(--input));}
+.inp-group .inp{border:none;}
+.inp-group .add{display:flex;align-items:center;padding:0 10px;background:hsl(var(--secondary));font-size:11.5px;color:hsl(var(--muted-foreground));border-left:1px solid hsl(var(--input));}
+.native-select{height:32px;border:1px solid hsl(var(--input));background:hsl(var(--background));color:hsl(var(--foreground));font-size:12.5px;padding:0 8px;}
+.otp{display:flex;gap:7px;}
+.otp input{width:34px;height:38px;text-align:center;border:1px solid hsl(var(--input));background:hsl(var(--background));color:hsl(var(--foreground));font-family:'JetBrains Mono',monospace;font-size:15px;outline:none;}
+.otp input:focus{border-color:hsl(var(--ring));}
+
+.select{position:relative;width:220px;}
+.select-trig{height:32px;padding:0 10px;border:1px solid hsl(var(--input));display:flex;align-items:center;justify-content:space-between;font-size:12.5px;cursor:pointer;background:hsl(var(--background));}
+.select-list{position:absolute;top:calc(100% + 4px);left:0;right:0;border:1px solid hsl(var(--border));background:hsl(var(--popover));box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:15;display:none;}
+.select.open .select-list{display:block;}
+.select-opt{padding:8px 10px;font-size:12.5px;cursor:pointer;}
+.select-opt:hover{background:hsl(var(--accent));}
+
+input[type=range]{width:100%;accent-color:hsl(var(--primary));}
+.progress{height:8px;background:hsl(var(--secondary));overflow:hidden;}
+.progress i{display:block;height:100%;background:hsl(var(--primary));}
+
+.spinner{width:20px;height:20px;border:2px solid hsl(var(--border));border-top-color:hsl(var(--foreground));border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.skel{background:linear-gradient(90deg,hsl(var(--muted)) 25%,hsl(var(--accent)) 50%,hsl(var(--muted)) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+@keyframes shimmer{to{background-position:-200% 0;}}
+
+.tip-wrap{position:relative;display:inline-block;}
+.tip{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:hsl(var(--popover));color:hsl(var(--popover-foreground));border:1px solid hsl(var(--border));font-size:11px;padding:5px 9px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;box-shadow:0 4px 14px rgba(0,0,0,.15);}
+.tip-wrap:hover .tip{opacity:1;}
+.hcard-wrap{position:relative;display:inline-block;}
+.hcard{position:absolute;top:calc(100% + 8px);left:0;width:260px;border:1px solid hsl(var(--border));background:hsl(var(--popover));padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);opacity:0;pointer-events:none;transform:translateY(4px);transition:.15s;z-index:20;}
+.hcard-wrap:hover .hcard{opacity:1;transform:none;pointer-events:auto;}
+.pop-wrap{position:relative;display:inline-block;}
+.pop{position:absolute;top:calc(100% + 8px);left:0;width:240px;border:1px solid hsl(var(--border));background:hsl(var(--popover));padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none;z-index:20;}
+.pop-wrap.open .pop{display:block;}
+
+.menu{position:absolute;min-width:180px;border:1px solid hsl(var(--border));background:hsl(var(--popover));box-shadow:0 10px 30px rgba(0,0,0,.15);padding:4px;z-index:25;display:none;}
+.menu.open{display:block;}
+.menu-item{padding:7px 10px;font-size:12.5px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.menu-item:hover{background:hsl(var(--accent));}
+.menu-sep{height:1px;background:hsl(var(--border));margin:4px 0;}
+.dd-wrap{position:relative;display:inline-block;}
+.dd-wrap .menu{top:calc(100% + 4px);left:0;}
+.ctx-zone{border:1px dashed hsl(var(--border));padding:26px;text-align:center;font-size:12px;color:hsl(var(--muted-foreground));user-select:none;}
+.menubar{display:inline-flex;border:1px solid hsl(var(--border));}
+.mb-item{position:relative;}
+.mb-trig{padding:8px 13px;font-size:12.5px;}
+.mb-trig:hover,.mb-item.open .mb-trig{background:hsl(var(--accent));}
+.mb-item .menu{top:100%;left:0;}
+.cmdk{border:1px solid hsl(var(--border));background:hsl(var(--popover));width:100%;max-width:420px;}
+.cmdk input{width:100%;height:40px;padding:0 12px;border:none;border-bottom:1px solid hsl(var(--border));background:transparent;color:hsl(var(--foreground));font-size:13px;outline:none;}
+.cmdk .grp-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:hsl(var(--muted-foreground));padding:8px 12px 4px;}
+.cmdk .itm{padding:8px 12px;font-size:12.5px;display:flex;justify-content:space-between;cursor:pointer;}
+.cmdk .itm:hover{background:hsl(var(--accent));}
+.cmdk .itm.hide{display:none;}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:none;align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.dialog{width:100%;max-width:420px;background:hsl(var(--background));border:1px solid hsl(var(--border));box-shadow:0 20px 50px rgba(0,0,0,.25);}
+.dialog .dh{padding:18px 18px 0;}
+.dialog .dh h3{font-size:14px;font-weight:600;}
+.dialog .dh p{margin-top:6px;font-size:12px;color:hsl(var(--muted-foreground));}
+.dialog .db{padding:14px 18px;}
+.dialog .df{padding:14px 18px 18px;display:flex;justify-content:flex-end;gap:8px;}
+.drawer-panel{position:fixed;right:0;top:0;bottom:0;width:320px;max-width:88vw;background:hsl(var(--background));border-left:1px solid hsl(var(--border));z-index:61;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;}
+.drawer-panel.open{transform:none;}
+.drawer-panel .dh{padding:16px;border-bottom:1px solid hsl(var(--border));}
+.drawer-panel .db{padding:16px;flex:1;font-size:12.5px;color:hsl(var(--muted-foreground));}
+.drawer-panel .df{padding:14px 16px;border-top:1px solid hsl(var(--border));display:flex;justify-content:flex-end;gap:8px;}
+
+.toaster{position:fixed;bottom:18px;right:18px;z-index:90;display:flex;flex-direction:column;gap:8px;}
+.toast{background:hsl(var(--popover));border:1px solid hsl(var(--border));padding:11px 15px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.15);transform:translateX(16px);opacity:0;transition:.25s;}
+.toast.show{transform:none;opacity:1;}
+
+.crumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:hsl(var(--muted-foreground));}
+.crumb a{color:hsl(var(--muted-foreground));}
+.crumb a:hover{color:hsl(var(--foreground));}
+.crumb .cur{color:hsl(var(--foreground));font-weight:500;}
+.pag{display:flex;gap:4px;}
+.pag button{width:30px;height:30px;border:1px solid hsl(var(--border));font-size:12px;}
+.pag button.on{background:hsl(var(--primary));color:hsl(var(--primary-foreground));border-color:hsl(var(--primary));}
+.navmenu{display:flex;gap:4px;border:1px solid hsl(var(--border));padding:4px;width:fit-content;}
+.navmenu>div{position:relative;}
+.navmenu button{padding:7px 12px;font-size:12.5px;}
+.navmenu button:hover{background:hsl(var(--accent));}
+.navmenu .panel{position:absolute;top:calc(100% + 4px);left:0;width:260px;border:1px solid hsl(var(--border));background:hsl(var(--popover));padding:12px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none;}
+.navmenu>div.open .panel{display:block;}
+.navmenu .panel a{display:block;padding:6px 4px;font-size:12px;color:hsl(var(--foreground));}
+.navmenu .panel a:hover{color:hsl(var(--muted-foreground));}
+
+.cal{width:260px;border:1px solid hsl(var(--border));padding:10px;background:hsl(var(--popover));}
+.cal .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;font-weight:500;}
+.cal .ch button{width:24px;height:24px;display:grid;place-items:center;}
+.cal .ch button:hover{background:hsl(var(--accent));}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-grid .dow{font-size:10px;color:hsl(var(--muted-foreground));text-align:center;padding:4px 0;}
+.cal-grid button{aspect-ratio:1;font-size:11.5px;display:grid;place-items:center;color:hsl(var(--foreground));}
+.cal-grid button:hover{background:hsl(var(--accent));}
+.cal-grid button.today{border:1px solid hsl(var(--border));}
+.cal-grid button.sel{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.cal-grid button.mut{color:hsl(var(--muted-foreground)/.5);}
+.datepick{position:relative;width:220px;}
+.datepick .cal{position:absolute;top:calc(100% + 4px);left:0;z-index:15;display:none;}
+.datepick.open .cal{display:block;}
+
+.item{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid hsl(var(--border));}
+.item:last-child{border-bottom:none;}
+.item .ic{width:34px;height:34px;background:hsl(var(--secondary));display:grid;place-items:center;flex:none;}
+.item .tx{flex:1;min-width:0;}
+.item .tx b{display:block;font-size:12.5px;font-weight:500;}
+.item .tx span{font-size:11px;color:hsl(var(--muted-foreground));}
+.attach{display:inline-flex;align-items:center;gap:9px;border:1px solid hsl(var(--border));padding:8px 10px;max-width:260px;}
+.attach .ic{width:30px;height:30px;background:hsl(var(--secondary));display:grid;place-items:center;flex:none;}
+.attach .tx b{display:block;font-size:12px;}
+.attach .tx span{font-size:10.5px;color:hsl(var(--muted-foreground));}
+.attach .bar{height:3px;background:hsl(var(--secondary));margin-top:5px;width:120px;}
+.attach .bar i{display:block;height:100%;background:hsl(var(--primary));width:62%;}
+
+.sb-demo{display:flex;border:1px solid hsl(var(--border));height:220px;}
+.sb-demo aside{width:160px;border-right:1px solid hsl(var(--border));padding:12px;background:hsl(var(--accent)/.4);}
+.sb-demo aside .i{padding:6px 8px;font-size:12px;color:hsl(var(--muted-foreground));}
+.sb-demo aside .i.on{background:hsl(var(--accent));color:hsl(var(--foreground));font-weight:500;}
+.sb-demo main{flex:1;padding:16px;font-size:12px;color:hsl(var(--muted-foreground));}
+
+.msg-scroll{border:1px solid hsl(var(--border));height:220px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;background:hsl(var(--accent)/.2);}
+.msg{max-width:75%;padding:9px 12px;font-size:12.5px;}
+.msg.me{align-self:flex-end;background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+.msg.them{align-self:flex-start;background:hsl(var(--card));border:1px solid hsl(var(--border));}
+
+.ar{position:relative;width:100%;background:hsl(var(--secondary));}
+.ar::before{content:'';display:block;padding-top:56.25%;}
+.ar .in{position:absolute;inset:0;display:grid;place-items:center;font-size:11.5px;color:hsl(var(--muted-foreground));font-family:'JetBrains Mono',monospace;}
+.chart-bars{display:flex;align-items:flex-end;gap:10px;height:140px;}
+.chart-bars .bar{flex:1;background:hsl(var(--chart-info));display:flex;align-items:flex-end;justify-content:center;position:relative;}
+.chart-bars .lab{position:absolute;bottom:-18px;font-size:10px;color:hsl(var(--muted-foreground));}
+.dir-demo{border:1px solid hsl(var(--border));padding:14px;display:flex;gap:10px;}
+.dir-demo[dir="rtl"]{flex-direction:row-reverse;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="brand">
+    <svg viewBox="0 0 517 389"><path d="M193.097 0.44C227.823-0.52 267.013 0.39 302.053 0.36L516.738 0.37C475.028 40.93 434.07 83.39 392.676 124.38 353.464 163.21 324.742 155.57 274.111 155.51L198.995 155.42C195.37 155.39 191.745 155.42 188.121 155.52 152.104 156.47 117.454 169.51 89.752 192.54 81.634 199.35 73.569 207.6 66.148 215.22 44.417 237.54 21.408 259.05 0 281.62L32.703 163.55C38.44 142.8 46.282 110.32 54.609 91.61 61.407 76.54 70.591 62.67 81.807 50.53 111.735 18.23 149.467 2.17 193.097 0.44Z"/><path d="M338.917 249.69C338.814 250.96 336.369 253.04 335.267 254.16L261.566 327.82C250.955 338.45 228.957 361.56 218.427 369.86 210.593 376.11 201.681 380.87 192.133 383.91 171.928 390.37 128.647 388.25 105.475 388.25L17.19 388.36C17.182 387.1 19.586 385 20.662 383.91L95.405 309.24C107.037 297.59 129.218 274.15 140.882 265.64 149.693 259.31 159.648 254.75 170.195 252.22 185.482 248.49 218.536 249.82 235.974 249.82L338.917 249.69Z"/></svg>
+    fleeting
+  </span>
+  <span class="grow"></span>
+  <span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">component library · shadcn/ui</span>
+  <div class="theme-tgl" id="theme">
+    <button data-th="light" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button data-th="dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="toc" id="toc">
+    <a href="#accordion">1. Accordion</a>
+    <a href="#alert">2. Alert</a>
+    <a href="#alertdialog">3. Alert Dialog</a>
+    <a href="#aspectratio">4. Aspect Ratio</a>
+    <a href="#attachment">5. Attachment</a>
+    <a href="#avatar">6. Avatar</a>
+    <a href="#badge">7. Badge</a>
+    <a href="#breadcrumb">8. Breadcrumb</a>
+    <a href="#button">9. Button</a>
+    <a href="#buttongroup">10. Button Group</a>
+    <a href="#calendar">11. Calendar</a>
+    <a href="#card">12. Card</a>
+    <a href="#chart">13. Chart</a>
+    <a href="#checkbox">14. Checkbox</a>
+    <a href="#collapsible">15. Collapsible</a>
+    <a href="#command">16. Command</a>
+    <a href="#contextmenu">17. Context Menu</a>
+    <a href="#datatable">18. Data Table</a>
+    <a href="#datepicker">19. Date Picker</a>
+    <a href="#dialog">20. Dialog</a>
+    <a href="#direction">21. Direction</a>
+    <a href="#drawer">22. Drawer</a>
+    <a href="#dropdownmenu">23. Dropdown Menu</a>
+    <a href="#field">24. Field</a>
+    <a href="#hovercard">25. Hover Card</a>
+    <a href="#input">26. Input</a>
+    <a href="#inputgroup">27. Input Group</a>
+    <a href="#inputotp">28. Input OTP</a>
+    <a href="#item">29. Item</a>
+    <a href="#menubar">30. Menubar</a>
+    <a href="#message">31. Message</a>
+    <a href="#messagescroller">32. Message Scroller</a>
+    <a href="#nativeselect">33. Native Select</a>
+    <a href="#navigationmenu">34. Navigation Menu</a>
+    <a href="#pagination">35. Pagination</a>
+    <a href="#popover">36. Popover</a>
+    <a href="#progress">37. Progress</a>
+    <a href="#radiogroup">38. Radio Group</a>
+    <a href="#select">39. Select</a>
+    <a href="#separator">40. Separator</a>
+    <a href="#sidebar">41. Sidebar</a>
+    <a href="#skeleton">42. Skeleton</a>
+    <a href="#slider">43. Slider</a>
+    <a href="#spinner">44. Spinner</a>
+    <a href="#switch">45. Switch</a>
+    <a href="#table">46. Table</a>
+    <a href="#tabs">47. Tabs</a>
+    <a href="#textarea">48. Textarea</a>
+    <a href="#toast">49. Toast</a>
+    <a href="#toggle">50. Toggle</a>
+    <a href="#togglegroup">51. Toggle Group</a>
+    <a href="#tooltip">52. Tooltip</a>
+    <a href="#typography">53. Typography</a>
+  </nav>
+
+  <main class="main">
+    <div class="intro">
+      <div class="kicker">// shadcn/ui component library</div>
+      <h1>53 components, styled to Fleeting's shadcn tokens</h1>
+      <p>Same design tokens as ws-shadcn.html: black-based dark mode, zero corner radius, Inter for UI text, JetBrains Mono for code and data. Every component below is a live, minimal implementation — not just a picture of one.</p>
+    </div>
+
+    <section class="c" id="accordion">
+      <div class="c-head"><span class="n">01</span><h2>Accordion</h2></div>
+      <div class="demo">
+        <div class="acc-item open">
+          <button class="acc-trig">Is this attempt verified? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body"><p>Yes — checks ran on a Fleeting runner outside the agent's control.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trig">What is an agent claim? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body"><p>A status reported by the agent itself, not yet independently checked.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="alert">
+      <div class="c-head"><span class="n">02</span><h2>Alert</h2></div>
+      <div class="demo" style="display:flex;flex-direction:column;gap:10px">
+        <div class="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Verified</div>42 of 42 checks passed independently.</div></div>
+        <div class="alert destructive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg><div><div class="at">Failed</div>3 integration tests regressed.</div></div>
+      </div>
+    </section>
+
+    <section class="c" id="alertdialog">
+      <div class="c-head"><span class="n">03</span><h2>Alert Dialog</h2><p>Blocking — requires an explicit choice, no dismiss-by-clicking-outside.</p></div>
+      <div class="demo"><button class="btn btn-destructive" id="openAlertDialog">Close attempt…</button></div>
+    </section>
+
+    <section class="c" id="aspectratio">
+      <div class="c-head"><span class="n">04</span><h2>Aspect Ratio</h2></div>
+      <div class="demo"><div style="max-width:360px"><div class="ar"><div class="in">16 / 9</div></div></div></div>
+    </section>
+
+    <section class="c" id="attachment">
+      <div class="c-head"><span class="n">05</span><h2>Attachment</h2></div>
+      <div class="demo">
+        <div class="attach">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/></svg></span>
+          <div class="tx"><b>verification-report.json</b><span>214 KB · uploading</span><div class="bar"><i></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="avatar">
+      <div class="c-head"><span class="n">06</span><h2>Avatar</h2></div>
+      <div class="demo row" style="display:flex;gap:10px;align-items:center">
+        <div class="avatar">KA</div>
+        <div class="avatar" style="background:hsl(var(--chart-info));color:#fff">JR</div>
+        <div class="avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.4-3.6 4.2-5.5 8-5.5s6.6 1.9 8 5.5"/></svg></div>
+      </div>
+    </section>
+
+    <section class="c" id="badge">
+      <div class="c-head"><span class="n">07</span><h2>Badge</h2></div>
+      <div class="demo" style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge badge-default">Default</span>
+        <span class="badge badge-secondary">Secondary</span>
+        <span class="badge badge-outline">Outline</span>
+        <span class="badge badge-destructive">Destructive</span>
+      </div>
+    </section>
+
+    <section class="c" id="breadcrumb">
+      <div class="c-head"><span class="n">08</span><h2>Breadcrumb</h2></div>
+      <div class="demo"><div class="crumb"><a href="#">platform-team</a><span>/</span><a href="#">sessions</a><span>/</span><span class="cur">refactor-auth-middleware</span></div></div>
+    </section>
+
+    <section class="c" id="button">
+      <div class="c-head"><span class="n">09</span><h2>Button</h2></div>
+      <div class="demo" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-default">Default</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-ghost">Ghost</button>
+        <button class="btn btn-destructive">Destructive</button>
+        <button class="btn btn-link">Link</button>
+        <button class="btn btn-default" disabled>Disabled</button>
+        <button class="btn btn-outline btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </section>
+
+    <section class="c" id="buttongroup">
+      <div class="c-head"><span class="n">10</span><h2>Button Group</h2></div>
+      <div class="demo"><div class="btngroup">
+        <button class="btn btn-outline">Board</button>
+        <button class="btn btn-outline">Table</button>
+        <button class="btn btn-outline">Timeline</button>
+      </div></div>
+    </section>
+
+    <section class="c" id="calendar">
+      <div class="c-head"><span class="n">11</span><h2>Calendar</h2></div>
+      <div class="demo"><div class="cal" id="cal1"></div></div>
+    </section>
+
+    <section class="c" id="card">
+      <div class="c-head"><span class="n">12</span><h2>Card</h2></div>
+      <div class="demo"><div class="card" style="max-width:340px">
+        <div class="ch"><h3>attempt-2</h3><p>middleware split · verified</p></div>
+        <div class="cb">42/42 checks passed on sandbox-eu-3, at $0.61 — the cheapest verified attempt in this session.</div>
+        <div class="cf"><button class="btn btn-outline btn-sm">Adopt</button><button class="btn btn-default btn-sm">Promote</button></div>
+      </div></div>
+    </section>
+
+    <section class="c" id="chart">
+      <div class="c-head"><span class="n">13</span><h2>Chart</h2></div>
+      <div class="demo">
+        <div class="chart-bars" style="max-width:360px;margin-bottom:22px">
+          <div class="bar" style="height:60%"><span class="lab">Mon</span></div>
+          <div class="bar" style="height:80%"><span class="lab">Tue</span></div>
+          <div class="bar" style="height:45%"><span class="lab">Wed</span></div>
+          <div class="bar" style="height:95%"><span class="lab">Thu</span></div>
+          <div class="bar" style="height:70%"><span class="lab">Fri</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="checkbox">
+      <div class="c-head"><span class="n">14</span><h2>Checkbox</h2></div>
+      <div class="demo" style="display:flex;gap:20px;align-items:center">
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="cbx" data-cbx><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-9"/></svg></span> Select attempt-2</label>
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="cbx on" data-cbx><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-9"/></svg></span> Select attempt-5</label>
+      </div>
+    </section>
+
+    <section class="c" id="collapsible">
+      <div class="c-head"><span class="n">15</span><h2>Collapsible</h2><p>Same mechanic as Accordion, single panel, no grouping.</p></div>
+      <div class="demo">
+        <button class="btn btn-outline btn-sm" id="collToggle">Show environment details</button>
+        <div class="acc-body" id="collBody" style="margin-top:10px"><p style="padding:10px 0">Snapshot env-7c41 · rust 1.86 locked · replayable: yes</p></div>
+      </div>
+    </section>
+
+    <section class="c" id="command">
+      <div class="c-head"><span class="n">16</span><h2>Command</h2></div>
+      <div class="demo">
+        <div class="cmdk">
+          <input placeholder="Type a command or search…" id="cmdInput">
+          <div class="grp-l">ATTEMPTS</div>
+          <div class="itm" data-k="attempt-1 token-cache rewrite">attempt-1 · token-cache rewrite <span class="mono" style="color:hsl(var(--muted-foreground))">⌘1</span></div>
+          <div class="itm" data-k="attempt-2 middleware split">attempt-2 · middleware split <span class="mono" style="color:hsl(var(--muted-foreground))">⌘2</span></div>
+          <div class="grp-l">ACTIONS</div>
+          <div class="itm" data-k="promote best candidate">Promote best candidate</div>
+          <div class="itm" data-k="compare attempts">Compare attempts</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="contextmenu">
+      <div class="c-head"><span class="n">17</span><h2>Context Menu</h2><p>Right-click the zone below.</p></div>
+      <div class="demo">
+        <div class="ctx-zone" id="ctxZone">Right-click here</div>
+        <div class="menu" id="ctxMenu">
+          <div class="menu-item">Adopt</div>
+          <div class="menu-item">Graft from…</div>
+          <div class="menu-sep"></div>
+          <div class="menu-item" style="color:hsl(var(--destructive))">Close attempt</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="datatable">
+      <div class="c-head"><span class="n">18</span><h2>Data Table</h2></div>
+      <div class="demo" style="padding:0">
+        <table>
+          <thead><tr><th>Attempt</th><th>Approach</th><th>Status</th><th style="text-align:right">Cost</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">attempt-1</td><td>token-cache rewrite</td><td><span class="badge badge-secondary">Verified</span></td><td style="text-align:right">$0.94</td></tr>
+            <tr><td class="mono">attempt-2</td><td>middleware split</td><td><span class="badge badge-secondary">Verified</span></td><td style="text-align:right">$0.61</td></tr>
+            <tr><td class="mono">attempt-5</td><td>full rewrite</td><td><span class="badge badge-destructive">Failed</span></td><td style="text-align:right">$2.18</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="c" id="datepicker">
+      <div class="c-head"><span class="n">19</span><h2>Date Picker</h2></div>
+      <div class="demo">
+        <div class="datepick" id="dpWrap">
+          <button class="select-trig" id="dpTrig" style="width:100%"><span id="dpVal">Pick a date</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="1"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></button>
+          <div class="cal" id="cal2"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="dialog">
+      <div class="c-head"><span class="n">20</span><h2>Dialog</h2><p>Non-destructive modal — dismissible by clicking outside.</p></div>
+      <div class="demo"><button class="btn btn-outline" id="openDialog">Environment details…</button></div>
+    </section>
+
+    <section class="c" id="direction">
+      <div class="c-head"><span class="n">21</span><h2>Direction</h2></div>
+      <div class="demo">
+        <button class="btn btn-outline btn-sm" id="dirToggle" style="margin-bottom:12px">Toggle RTL / LTR</button>
+        <div class="dir-demo" id="dirDemo" dir="ltr">
+          <span class="badge badge-secondary">Verified</span>
+          <span>attempt-2 · middleware split</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="drawer">
+      <div class="c-head"><span class="n">22</span><h2>Drawer</h2><p>Slide-over panel, same pattern as the workspace's attempt inspector.</p></div>
+      <div class="demo"><button class="btn btn-outline" id="openDrawer">Open attempt-2</button></div>
+    </section>
+
+    <section class="c" id="dropdownmenu">
+      <div class="c-head"><span class="n">23</span><h2>Dropdown Menu</h2></div>
+      <div class="demo">
+        <div class="dd-wrap" id="ddWrap">
+          <button class="btn btn-outline" id="ddTrig">Actions ▾</button>
+          <div class="menu" id="ddMenu">
+            <div class="menu-item">Adopt</div>
+            <div class="menu-item">Graft from…</div>
+            <div class="menu-item">Replay environment</div>
+            <div class="menu-sep"></div>
+            <div class="menu-item" style="color:hsl(var(--destructive))">Close attempt</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="field">
+      <div class="c-head"><span class="n">24</span><h2>Field</h2></div>
+      <div class="demo">
+        <div class="field">
+          <label for="f1">Session name</label>
+          <input class="inp" id="f1" placeholder="refactor-auth-middleware">
+          <span class="hint">Used as the branch prefix for every attempt.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="hovercard">
+      <div class="c-head"><span class="n">25</span><h2>Hover Card</h2></div>
+      <div class="demo">
+        <div class="hcard-wrap">
+          <span class="badge badge-outline" style="cursor:default">@claude-code-fleet-3</span>
+          <div class="hcard">
+            <b style="font-size:12.5px">claude-code-fleet-3</b>
+            <p style="margin-top:6px;font-size:11.5px;color:hsl(var(--muted-foreground))">Agent running this session. 6 attempts opened, 2 verified independently.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="input">
+      <div class="c-head"><span class="n">26</span><h2>Input</h2></div>
+      <div class="demo" style="max-width:320px"><input class="inp" placeholder="Filter attempts…"></div>
+    </section>
+
+    <section class="c" id="inputgroup">
+      <div class="c-head"><span class="n">27</span><h2>Input Group</h2></div>
+      <div class="demo" style="max-width:320px">
+        <div class="inp-group"><input class="inp" placeholder="0.61"><span class="add">USD</span></div>
+      </div>
+    </section>
+
+    <section class="c" id="inputotp">
+      <div class="c-head"><span class="n">28</span><h2>Input OTP</h2></div>
+      <div class="demo"><div class="otp"><input maxlength="1"><input maxlength="1"><input maxlength="1"><input maxlength="1"><input maxlength="1"><input maxlength="1"></div></div>
+    </section>
+
+    <section class="c" id="item">
+      <div class="c-head"><span class="n">29</span><h2>Item</h2></div>
+      <div class="demo" style="padding:4px 16px">
+        <div class="item"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div class="tx"><b>attempt-2 verified</b><span>42/42 checks · 3m 05s ago</span></div><span class="badge badge-secondary">Verified</span></div>
+        <div class="item"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></span><div class="tx"><b>attempt-5 failed</b><span>3 tests regressed · 6m ago</span></div><span class="badge badge-destructive">Failed</span></div>
+      </div>
+    </section>
+
+    <section class="c" id="menubar">
+      <div class="c-head"><span class="n">30</span><h2>Menubar</h2></div>
+      <div class="demo">
+        <div class="menubar" id="menubarWrap">
+          <div class="mb-item"><button class="mb-trig">Session</button><div class="menu"><div class="menu-item">Replay</div><div class="menu-item">Rename</div></div></div>
+          <div class="mb-item"><button class="mb-trig">View</button><div class="menu"><div class="menu-item">Board</div><div class="menu-item">Table</div></div></div>
+          <div class="mb-item"><button class="mb-trig">Help</button><div class="menu"><div class="menu-item">Docs</div><div class="menu-item">Shortcuts</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="message">
+      <div class="c-head"><span class="n">31</span><h2>Message</h2></div>
+      <div class="demo" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <div class="msg them">Agent reported "tests pass" — claim recorded, not trusted.</div>
+        <div class="msg me" style="align-self:flex-end">Fleeting ran 42 checks independently — all passed.</div>
+      </div>
+    </section>
+
+    <section class="c" id="messagescroller">
+      <div class="c-head"><span class="n">32</span><h2>Message Scroller</h2></div>
+      <div class="demo" style="padding:0">
+        <div class="msg-scroll">
+          <div class="msg them">Branched from session root</div>
+          <div class="msg them">Agent wrote 96 LOC across 4 files</div>
+          <div class="msg them">Agent claims "tests pass"</div>
+          <div class="msg me" style="align-self:flex-end">Verified independently — 42/42 passed</div>
+          <div class="msg me" style="align-self:flex-end">Placement attested (sandbox-eu-3)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="nativeselect">
+      <div class="c-head"><span class="n">33</span><h2>Native Select</h2></div>
+      <div class="demo"><select class="native-select"><option>All attempts</option><option>Verified only</option><option>Failed only</option></select></div>
+    </section>
+
+    <section class="c" id="navigationmenu">
+      <div class="c-head"><span class="n">34</span><h2>Navigation Menu</h2></div>
+      <div class="demo">
+        <div class="navmenu" id="navMenu">
+          <div><button>Sessions</button><div class="panel"><a href="#">refactor-auth-middleware</a><a href="#">migrate-billing-schema</a><a href="#">fix-rate-limiter-flake</a></div></div>
+          <div><button>Docs</button><div class="panel"><a href="#">Getting started</a><a href="#">Verification model</a></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="pagination">
+      <div class="c-head"><span class="n">35</span><h2>Pagination</h2></div>
+      <div class="demo"><div class="pag"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>›</button></div></div>
+    </section>
+
+    <section class="c" id="popover">
+      <div class="c-head"><span class="n">36</span><h2>Popover</h2></div>
+      <div class="demo">
+        <div class="pop-wrap" id="popWrap">
+          <button class="btn btn-outline" id="popTrig">Cost breakdown</button>
+          <div class="pop">
+            <div style="font-size:12px;display:flex;justify-content:space-between;padding:3px 0"><span>Compute</span><span class="mono">$0.44</span></div>
+            <div style="font-size:12px;display:flex;justify-content:space-between;padding:3px 0"><span>Verification</span><span class="mono">$0.17</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="progress">
+      <div class="c-head"><span class="n">37</span><h2>Progress</h2></div>
+      <div class="demo" style="max-width:320px"><div class="progress"><i style="width:71%"></i></div><div class="mono" style="margin-top:6px;font-size:11px;color:hsl(var(--muted-foreground))">38 / 42 checks</div></div>
+    </section>
+
+    <section class="c" id="radiogroup">
+      <div class="c-head"><span class="n">38</span><h2>Radio Group</h2></div>
+      <div class="demo" style="display:flex;flex-direction:column;gap:10px">
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="rdo on" data-rdo="promote"></span> Promote to shared trust</label>
+        <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><span class="rdo" data-rdo="promote"></span> Adopt locally only</label>
+      </div>
+    </section>
+
+    <section class="c" id="select">
+      <div class="c-head"><span class="n">39</span><h2>Select</h2></div>
+      <div class="demo">
+        <div class="select" id="selWrap">
+          <div class="select-trig" id="selTrig"><span id="selVal">Sort by cost</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="select-list">
+            <div class="select-opt">Sort by cost</div>
+            <div class="select-opt">Sort by duration</div>
+            <div class="select-opt">Sort by status</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c" id="separator">
+      <div class="c-head"><span class="n">40</span><h2>Separator</h2></div>
+      <div class="demo">
+        <div style="font-size:12px">Above</div><hr class="sep" style="margin:10px 0"><div style="font-size:12px">Below</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:14px;height:20px"><span style="font-size:12px">Verified</span><span class="sep-v"></span><span style="font-size:12px">2 attempts</span></div>
+      </div>
+    </section>
+
+    <section class="c" id="sidebar">
+      <div class="c-head"><span class="n">41</span><h2>Sidebar</h2></div>
+      <div class="demo" style="padding:0"><div class="sb-demo">
+        <aside><div class="i on">Review queue</div><div class="i">Sessions</div><div class="i">Environments</div><div class="i">Policies</div></aside>
+        <main>Main content area — the attempt tree, board, or case card renders here.</main>
+      </div></div>
+    </section>
+
+    <section class="c" id="skeleton">
+      <div class="c-head"><span class="n">42</span><h2>Skeleton</h2></div>
+      <div class="demo" style="display:flex;gap:12px;align-items:center">
+        <div class="skel" style="width:34px;height:34px;border-radius:50%"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px"><div class="skel" style="height:11px;width:60%"></div><div class="skel" style="height:10px;width:40%"></div></div>
+      </div>
+    </section>
+
+    <section class="c" id="slider">
+      <div class="c-head"><span class="n">43</span><h2>Slider</h2></div>
+      <div class="demo" style="max-width:320px"><input type="range" min="0" max="100" value="61"></div>
+    </section>
+
+    <section class="c" id="spinner">
+      <div class="c-head"><span class="n">44</span><h2>Spinner</h2></div>
+      <div class="demo" style="display:flex;gap:14px;align-items:center"><div class="spinner"></div><span style="font-size:12px;color:hsl(var(--muted-foreground))">Verifying attempt-3…</span></div>
+    </section>
+
+    <section class="c" id="switch">
+      <div class="c-head"><span class="n">45</span><h2>Switch</h2></div>
+      <div class="demo" style="display:flex;gap:20px;align-items:center">
+        <label style="display:flex;gap:9px;align-items:center;cursor:pointer"><span class="sw on" data-sw><span class="kn"></span></span> Auto-verify new attempts</label>
+        <label style="display:flex;gap:9px;align-items:center;cursor:pointer"><span class="sw" data-sw><span class="kn"></span></span> Notify on failure</label>
+      </div>
+    </section>
+
+    <section class="c" id="table">
+      <div class="c-head"><span class="n">46</span><h2>Table</h2></div>
+      <div class="demo" style="padding:0">
+        <table>
+          <thead><tr><th>Runner</th><th>Region</th><th style="text-align:right">Active</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">sandbox-eu-3</td><td>eu-west</td><td style="text-align:right">4</td></tr>
+            <tr><td class="mono">sandbox-us-1</td><td>us-east</td><td style="text-align:right">2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="c" id="tabs">
+      <div class="c-head"><span class="n">47</span><h2>Tabs</h2></div>
+      <div class="demo">
+        <div class="tabslist" id="tabsDemo">
+          <button class="tabstrig on" data-tab="ev">Evidence</button>
+          <button class="tabstrig" data-tab="en">Environment</button>
+          <button class="tabstrig" data-tab="po">Policy</button>
+        </div>
+        <div class="tabpanel on" data-panel="ev">42/42 checks passed independently.</div>
+        <div class="tabpanel" data-panel="en">Snapshot env-7c41 · rust 1.86 locked.</div>
+        <div class="tabpanel" data-panel="po">read:auth, write:tests · no secrets mounted.</div>
+      </div>
+    </section>
+
+    <section class="c" id="textarea">
+      <div class="c-head"><span class="n">48</span><h2>Textarea</h2></div>
+      <div class="demo" style="max-width:400px"><textarea class="inp" placeholder="Leave a note for the next reviewer…"></textarea></div>
+    </section>
+
+    <section class="c" id="toast">
+      <div class="c-head"><span class="n">49</span><h2>Toast</h2></div>
+      <div class="demo"><button class="btn btn-outline" id="fireToast">Promote attempt-2</button></div>
+    </section>
+
+    <section class="c" id="toggle">
+      <div class="c-head"><span class="n">50</span><h2>Toggle</h2></div>
+      <div class="demo" style="display:flex;gap:8px"><button class="tgl-btn on" data-tgl>Bold</button><button class="tgl-btn" data-tgl>Italic</button></div>
+    </section>
+
+    <section class="c" id="togglegroup">
+      <div class="c-head"><span class="n">51</span><h2>Toggle Group</h2></div>
+      <div class="demo"><div class="tglgroup" id="tglGroup">
+        <button class="tgl-btn on">Board</button><button class="tgl-btn">Table</button><button class="tgl-btn">Tree</button>
+      </div></div>
+    </section>
+
+    <section class="c" id="tooltip">
+      <div class="c-head"><span class="n">52</span><h2>Tooltip</h2></div>
+      <div class="demo"><div class="tip-wrap"><button class="btn btn-outline btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></button><span class="tip">Independently verified</span></div></div>
+    </section>
+
+    <section class="c" id="typography">
+      <div class="c-head"><span class="n">53</span><h2>Typography</h2></div>
+      <div class="demo" style="display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:22px;font-weight:800;letter-spacing:-.01em">Heading — Extrabold 22px</div>
+        <div style="font-size:16px;font-weight:700">Subheading — Bold 16px</div>
+        <div style="font-size:13px;color:hsl(var(--foreground))">Body text — Regular 13px, used for all prose.</div>
+        <div style="font-size:11.5px;color:hsl(var(--muted-foreground))">Muted / caption — 11.5px</div>
+        <div class="mono" style="font-size:11.5px">runner: sandbox-eu-3 ✓ attested — JetBrains Mono</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="overlay" id="dialogOverlay">
+  <div class="dialog">
+    <div class="dh"><h3>Environment details</h3><p>attempt-2 · snapshot env-7c41</p></div>
+    <div class="db">Rust 1.86, locked toolchain. Replayable from this exact snapshot at any time.</div>
+    <div class="df"><button class="btn btn-outline btn-sm" id="closeDialog">Close</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="alertDialogOverlay">
+  <div class="dialog">
+    <div class="dh"><h3>Close this attempt?</h3><p>This can't be undone from here — the record stays for audit, but the attempt won't be selectable for promotion.</p></div>
+    <div class="df"><button class="btn btn-outline btn-sm" id="cancelAlertDialog">Cancel</button><button class="btn btn-destructive btn-sm" id="confirmAlertDialog">Close attempt</button></div>
+  </div>
+</div>
+
+<div class="drawer-panel" id="drawerPanel">
+  <div class="dh"><h3 style="font-size:13.5px;font-weight:600">attempt-2</h3><p style="font-size:11.5px;color:hsl(var(--muted-foreground));margin-top:4px">middleware split · verified</p></div>
+  <div class="db">42/42 checks passed on sandbox-eu-3. Lowest cost of the verified set at $0.61.</div>
+  <div class="df"><button class="btn btn-outline btn-sm" id="closeDrawer">Close</button><button class="btn btn-default btn-sm">Promote</button></div>
+</div>
+<div class="overlay" id="drawerScrim" style="background:rgba(0,0,0,.35)"></div>
+
+<div class="toaster"><div class="toast" id="toastEl">✓ attempt-2 promoted · audit entry recorded</div></div>
+
+<script>
+document.querySelectorAll('#theme button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#theme button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.documentElement.dataset.theme=b.dataset.th;
+});
+
+const links=[...document.querySelectorAll('.toc a')];
+const secs=links.map(l=>document.querySelector(l.getAttribute('href')));
+function spy(){let i=0;secs.forEach((s,idx)=>{if(s&&s.getBoundingClientRect().top-80<=0)i=idx;});links.forEach((l,idx)=>l.classList.toggle('on',idx===i));}
+addEventListener('scroll',spy,{passive:true});spy();
+
+document.querySelectorAll('.acc-trig').forEach(t=>t.onclick=()=>t.parentElement.classList.toggle('open'));
+
+document.getElementById('collToggle').onclick=e=>{
+  const b=document.getElementById('collBody');
+  const open=b.style.maxHeight&&b.style.maxHeight!=='0px';
+  b.style.maxHeight=open?'0px':'100px';
+  b.style.overflow='hidden';b.style.transition='max-height .25s ease';
+  e.target.textContent=open?'Show environment details':'Hide environment details';
+};
+document.getElementById('collBody').style.maxHeight='0px';
+document.getElementById('collBody').style.overflow='hidden';
+
+document.querySelectorAll('[data-cbx]').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.querySelectorAll('[data-rdo]').forEach(r=>r.onclick=()=>{
+  const g=r.dataset.rdo;
+  document.querySelectorAll('[data-rdo="'+g+'"]').forEach(x=>x.classList.remove('on'));
+  r.classList.add('on');
+});
+document.querySelectorAll('[data-sw]').forEach(s=>s.onclick=()=>s.classList.toggle('on'));
+document.querySelectorAll('[data-tgl]').forEach(t=>t.onclick=()=>t.classList.toggle('on'));
+document.querySelectorAll('#tglGroup .tgl-btn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#tglGroup .tgl-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+});
+
+document.querySelectorAll('#tabsDemo .tabstrig').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('#tabsDemo .tabstrig').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+  document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('on',p.dataset.panel===t.dataset.tab));
+});
+
+const ddWrap=document.getElementById('ddWrap'),ddTrig=document.getElementById('ddTrig'),ddMenu=document.getElementById('ddMenu');
+ddTrig.onclick=e=>{e.stopPropagation();ddMenu.classList.toggle('open');};
+
+document.querySelectorAll('.mb-item').forEach(item=>{
+  item.querySelector('.mb-trig').onclick=e=>{
+    e.stopPropagation();
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.mb-item').forEach(x=>x.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  };
+});
+
+document.querySelectorAll('#navMenu>div').forEach(item=>{
+  item.querySelector('button').onclick=e=>{
+    e.stopPropagation();
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('#navMenu>div').forEach(x=>x.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  };
+});
+
+const popWrap=document.getElementById('popWrap');
+document.getElementById('popTrig').onclick=e=>{e.stopPropagation();popWrap.classList.toggle('open');};
+
+const selWrap=document.getElementById('selWrap');
+document.getElementById('selTrig').onclick=e=>{e.stopPropagation();selWrap.classList.toggle('open');};
+selWrap.querySelectorAll('.select-opt').forEach(o=>o.onclick=()=>{
+  document.getElementById('selVal').textContent=o.textContent;selWrap.classList.remove('open');
+});
+
+document.addEventListener('click',()=>{
+  ddMenu.classList.remove('open');
+  document.querySelectorAll('.mb-item,#navMenu>div').forEach(x=>x.classList.remove('open'));
+  popWrap.classList.remove('open');
+  selWrap.classList.remove('open');
+  document.getElementById('ctxMenu').classList.remove('open');
+  const dp=document.getElementById('dpWrap'); if(dp) dp.classList.remove('open');
+});
+
+const ctxZone=document.getElementById('ctxZone'),ctxMenu=document.getElementById('ctxMenu');
+ctxZone.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  ctxMenu.style.left=e.offsetX+'px';ctxMenu.style.top=e.offsetY+'px';
+  ctxMenu.classList.add('open');
+});
+
+function buildCalendar(el, onPick){
+  const now=new Date(2026,7,25);
+  let viewM=now.getMonth(), viewY=now.getFullYear();
+  function render(){
+    const first=new Date(viewY,viewM,1);
+    const startDow=first.getDay();
+    const daysInMonth=new Date(viewY,viewM+1,0).getDate();
+    const monthName=first.toLocaleString('en',{month:'long'});
+    let html=`<div class="ch"><button data-nav="-1">‹</button><span>${monthName} ${viewY}</span><button data-nav="1">›</button></div><div class="cal-grid">`;
+    ['S','M','T','W','T','F','S'].forEach(d=>html+=`<div class="dow">${d}</div>`);
+    for(let i=0;i<startDow;i++)html+=`<button class="mut" disabled></button>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const isToday=d===now.getDate()&&viewM===now.getMonth();
+      html+=`<button class="${isToday?'today':''}" data-day="${d}">${d}</button>`;
+    }
+    html+='</div>';
+    el.innerHTML=html;
+    el.querySelectorAll('[data-nav]').forEach(b=>b.onclick=ev=>{ev.stopPropagation();viewM+=+b.dataset.nav;if(viewM<0){viewM=11;viewY--;}if(viewM>11){viewM=0;viewY++;}render();});
+    el.querySelectorAll('[data-day]').forEach(b=>b.onclick=ev=>{
+      ev.stopPropagation();
+      el.querySelectorAll('[data-day]').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      if(onPick)onPick(`${monthName} ${b.dataset.day}, ${viewY}`);
+    });
+  }
+  render();
+}
+buildCalendar(document.getElementById('cal1'));
+buildCalendar(document.getElementById('cal2'), val=>{
+  document.getElementById('dpVal').textContent=val;
+  document.getElementById('dpWrap').classList.remove('open');
+});
+document.getElementById('dpTrig').onclick=e=>{e.stopPropagation();document.getElementById('dpWrap').classList.toggle('open');};
+
+document.getElementById('cmdInput').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase();
+  document.querySelectorAll('.cmdk .itm').forEach(i=>i.classList.toggle('hide', !i.dataset.k.includes(q)));
+});
+
+document.getElementById('dirToggle').onclick=()=>{
+  const d=document.getElementById('dirDemo');
+  d.setAttribute('dir', d.getAttribute('dir')==='ltr'?'rtl':'ltr');
+};
+
+document.getElementById('openDialog').onclick=()=>document.getElementById('dialogOverlay').classList.add('open');
+document.getElementById('closeDialog').onclick=()=>document.getElementById('dialogOverlay').classList.remove('open');
+document.getElementById('dialogOverlay').onclick=e=>{if(e.target.id==='dialogOverlay')e.currentTarget.classList.remove('open');};
+
+document.getElementById('openAlertDialog').onclick=()=>document.getElementById('alertDialogOverlay').classList.add('open');
+document.getElementById('cancelAlertDialog').onclick=()=>document.getElementById('alertDialogOverlay').classList.remove('open');
+document.getElementById('confirmAlertDialog').onclick=()=>{document.getElementById('alertDialogOverlay').classList.remove('open');fireToastMsg('— attempt closed');};
+
+const drawerPanel=document.getElementById('drawerPanel'),drawerScrim=document.getElementById('drawerScrim');
+document.getElementById('openDrawer').onclick=()=>{drawerPanel.classList.add('open');drawerScrim.classList.add('open');};
+document.getElementById('closeDrawer').onclick=()=>{drawerPanel.classList.remove('open');drawerScrim.classList.remove('open');};
+drawerScrim.onclick=()=>{drawerPanel.classList.remove('open');drawerScrim.classList.remove('open');};
+
+let tT;
+function fireToastMsg(msg){
+  const t=document.getElementById('toastEl');
+  if(msg)t.textContent=msg;
+  t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2600);
+}
+document.getElementById('fireToast').onclick=()=>fireToastMsg('✓ attempt-2 promoted · audit entry recorded');
+</script>
+</body>
+</html>
