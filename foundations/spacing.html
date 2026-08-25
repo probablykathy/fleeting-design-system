@@ -68,47 +68,56 @@
     <div class="intro">
       <div class="kicker">// foundations</div>
       <h1>Spacing</h1>
-      <p>Honest gap in the system: there is no formal spacing scale or token today. Padding and gap values are hand-picked per component. This page documents the values as they actually occur in <span class="mono">components.css</span> — a first step toward a real scale, not a claim that one already exists.</p>
+      <p>The system runs on a formal 4px base grid: eight named tokens, <span class="mono">--space-1</span> through <span class="mono">--space-8</span>, each a multiple of 4px. Every padding, margin, and gap in the component library is expected to resolve to one of these — no more arbitrary in-between values like the old 6px/9px/13px/18px/22px cluster this page used to describe.</p>
     </div>
 
     <section class="c">
-      <div class="c-head"><span class="n">01</span><h2>Values currently in use</h2><p>Pulled directly from the component stylesheet's padding and gap declarations, smallest to largest.</p></div>
+      <div class="c-head"><span class="n">01</span><h2>The scale</h2><p>Defined once in <span class="mono">tokens.css</span> (and mirrored in the source catalogue's own <span class="mono">:root</span>), theme-independent — spacing doesn't change between light and dark.</p></div>
       <div class="demo">
-        <div class="space-row"><span class="val">2px</span><div class="space-bar" style="width:2px"></div></div>
-        <div class="space-row"><span class="val">4px</span><div class="space-bar" style="width:4px"></div></div>
-        <div class="space-row"><span class="val">6px</span><div class="space-bar" style="width:6px"></div></div>
-        <div class="space-row"><span class="val">8px</span><div class="space-bar" style="width:8px"></div></div>
-        <div class="space-row"><span class="val">9px</span><div class="space-bar" style="width:9px"></div></div>
-        <div class="space-row"><span class="val">10px</span><div class="space-bar" style="width:10px"></div></div>
-        <div class="space-row"><span class="val">12px</span><div class="space-bar" style="width:12px"></div></div>
-        <div class="space-row"><span class="val">13px</span><div class="space-bar" style="width:13px"></div></div>
-        <div class="space-row"><span class="val">14px</span><div class="space-bar" style="width:14px"></div></div>
-        <div class="space-row"><span class="val">16px</span><div class="space-bar" style="width:16px"></div></div>
-        <div class="space-row"><span class="val">18px</span><div class="space-bar" style="width:18px"></div></div>
-        <div class="space-row"><span class="val">20px</span><div class="space-bar" style="width:20px"></div></div>
-        <div class="space-row"><span class="val">22px</span><div class="space-bar" style="width:22px"></div></div>
-        <div class="space-row"><span class="val">26px</span><div class="space-bar" style="width:26px"></div></div>
+        <div class="space-row"><span class="val mono">--space-1</span><div class="space-bar" style="width:var(--space-1)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">4px</span></div>
+        <div class="space-row"><span class="val mono">--space-2</span><div class="space-bar" style="width:var(--space-2)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">8px</span></div>
+        <div class="space-row"><span class="val mono">--space-3</span><div class="space-bar" style="width:var(--space-3)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">12px</span></div>
+        <div class="space-row"><span class="val mono">--space-4</span><div class="space-bar" style="width:var(--space-4)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">16px</span></div>
+        <div class="space-row"><span class="val mono">--space-5</span><div class="space-bar" style="width:var(--space-5)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">20px</span></div>
+        <div class="space-row"><span class="val mono">--space-6</span><div class="space-bar" style="width:var(--space-6)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">24px</span></div>
+        <div class="space-row"><span class="val mono">--space-7</span><div class="space-bar" style="width:var(--space-7)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">28px</span></div>
+        <div class="space-row"><span class="val mono">--space-8</span><div class="space-bar" style="width:var(--space-8)"></div><span class="mono" style="font-size:11px;color:hsl(var(--muted-foreground))">32px</span></div>
       </div>
+      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
+        <strong>Principle: every spacing value is a multiple of 4px.</strong> Larger structural gaps that fall outside this
+        eight-step range (the page's 120px bottom clearance, a 40px sidebar footer gap) still follow the same 4px rule —
+        they're just written as plain 4-multiple pixel values rather than named tokens, since the scale above only formalizes
+        the range actually reused across components.
+      </p>
     </section>
 
     <section class="c">
-      <div class="c-head"><span class="n">02</span><h2>Where each is used</h2></div>
+      <div class="c-head"><span class="n">02</span><h2>Where each token is used</h2></div>
       <table>
-        <thead><tr><th>Value</th><th>Seen in</th></tr></thead>
+        <thead><tr><th>Token</th><th>Seen in</th></tr></thead>
         <tbody>
-          <tr><td class="mono">4–6px</td><td>Icon-to-label gaps (Button, Toggle), checkbox/switch internal spacing</td></tr>
-          <tr><td class="mono">8–10px</td><td>Badge padding, most flex gaps between inline controls</td></tr>
-          <tr><td class="mono">12–14px</td><td>Card and alert internal padding, table cell padding</td></tr>
-          <tr><td class="mono">16–20px</td><td><span class="mono">.demo</span> and <span class="mono">.card .ch/.cb</span> padding, dialog padding</td></tr>
-          <tr><td class="mono">22–26px</td><td>Section (<span class="mono">.c</span>) vertical rhythm, header height, context-menu zone padding</td></tr>
+          <tr><td class="mono">--space-1 (4px)</td><td>Icon-to-label gaps (Button, Badge), checkbox/switch/toggle-group internal gaps, tight list-row padding</td></tr>
+          <tr><td class="mono">--space-2 (8px)</td><td>Input/Select/Native-Select horizontal padding, table cell padding, most inline flex gaps</td></tr>
+          <tr><td class="mono">--space-3 (12px)</td><td>Button default horizontal padding, Alert padding, Card footer padding, menu/command-palette padding</td></tr>
+          <tr><td class="mono">--space-4 (16px)</td><td>Card header/body padding, Button-lg padding, Dialog/Drawer padding, sidebar-demo content padding</td></tr>
+          <tr><td class="mono">--space-5 (20px)</td><td><span class="mono">.demo</span> and overlay-scrim padding, header/sidebar outer edge padding</td></tr>
+          <tr><td class="mono">--space-6 (24px)</td><td>Context-menu drop-zone padding, chart-to-legend margin</td></tr>
+          <tr><td class="mono">--space-7 (28px)</td><td>Main content area's side margin</td></tr>
+          <tr><td class="mono">--space-8 (32px)</td><td>Main content area's top padding, Card illustration-adjacent rhythm</td></tr>
         </tbody>
       </table>
-      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
-        These cluster loosely around a 2px increment rather than the more common 4px/8px grid — close enough to read as
-        intentional, not close enough to call a formal scale. Converging this into named tokens (<span class="mono">--space-1</span>
-        through <span class="mono">--space-6</span>, for example) is flagged as a Should-Improve item, not done here — it would
-        touch every component's padding/gap declarations, which is out of scope for documentation.
-      </p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">03</span><h2>Non-4px values intentionally retained</h2><p>Formalizing the grid didn't mean forcing every number onto it. A few values stayed off-grid on purpose:</p></div>
+      <table>
+        <thead><tr><th>Value</th><th>Where</th><th>Why retained</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1–2px</td><td>Badge vertical padding, alert icon/title optical nudges, accordion trigger edge padding, tab-track and calendar-grid gutters</td><td>Hairline optical adjustments below the smallest token (4px) — rounding up would be a 100%+ size increase in very small chrome (a badge's own height, a tab pill's inset), visibly changing proportions the request asked to preserve.</td></tr>
+          <tr><td class="mono">4–8px offsets in <span class="mono">calc(100% + Npx)</span></td><td>Tooltip, Hover Card, Popover, Select, Dropdown Menu, Navigation Menu, Date Picker — every anchored-popover gap</td><td>Explicitly excluded as "positioning required for an interaction" — these offset a floating surface from its trigger; changing them shifts where the popover lands, not how much breathing room content has.</td></tr>
+          <tr><td class="mono">10px / 18px chart gaps</td><td>Bar, grouped-bar and stacked-bar Chart gaps between bars/columns</td><td>Excluded as chart dimensions — the gap between bars is part of the chart's visual data-density, not general layout spacing, per the audit's exclusion list.</td></tr>
+        </tbody>
+      </table>
     </section>
 
   </main>

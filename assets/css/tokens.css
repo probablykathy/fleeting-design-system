@@ -12,6 +12,32 @@
   previews side by side. Approved 2026-08-25 — additive only, no value changed.
 */
 
+:root{
+  /* Spacing scale — 4px base grid. Theme-independent (same in light and
+     dark), so this lives outside the [data-theme] blocks below rather than
+     duplicated inside each one. Added as part of formalizing spacing off
+     the previously ad hoc 2px-ish cluster of values (6/9/10/13/14/18/22/26px)
+     — see Foundations → Spacing for the audit and rationale. */
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+
+  /* Shadow scale — extracted verbatim from the four elevation values already
+     in use; no values invented. Theme-independent, same reason as spacing.
+     Two additional shadows exist in the source (.slider-tip, .card.hoverable)
+     that are close to but not identical to these four — see Foundations →
+     Shadows for why those were left as literals rather than forced onto a
+     token that would silently change their rendered value. */
+  --shadow-sm:0 4px 14px rgba(0,0,0,.15);   /* Tooltip */
+  --shadow-md:0 8px 24px rgba(0,0,0,.12);   /* Select */
+  --shadow-lg:0 10px 30px rgba(0,0,0,.15);  /* Menu, Popover, Hover Card, Toast, Navigation Menu panel */
+  --shadow-xl:0 20px 50px rgba(0,0,0,.25);  /* Dialog */
+}
 :root[data-theme="light"], [data-theme="light"]{
   --background:0 0% 100%; --foreground:240 10% 3.9%;
   --card:0 0% 100%; --card-foreground:240 10% 3.9%;

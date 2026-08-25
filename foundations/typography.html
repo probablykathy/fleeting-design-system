@@ -102,18 +102,19 @@
     <section class="c">
       <div class="c-head"><span class="n">02</span><h2>Type ramp</h2><p>The sizes used in the original component catalogue's own "Typography" showcase, carried over verbatim.</p></div>
       <div class="demo">
-        <div class="type-row"><div class="sample" style="font-size:22px;font-weight:800;letter-spacing:-.01em">Heading</div><div class="meta">22px · 800 · Inter</div></div>
+        <div class="type-row"><div class="sample" style="font-size:20px;font-weight:800;letter-spacing:-.01em">Heading</div><div class="meta">20px · 800 · Inter</div></div>
         <div class="type-row"><div class="sample" style="font-size:16px;font-weight:700">Subheading</div><div class="meta">16px · 700 · Inter</div></div>
         <div class="type-row"><div class="sample" style="font-size:13px">Body text — used for all prose.</div><div class="meta">13px · 400 · Inter</div></div>
         <div class="type-row"><div class="sample" style="font-size:11.5px;color:hsl(var(--muted-foreground))">Muted / caption</div><div class="meta">11.5px · 400 · Inter</div></div>
         <div class="type-row"><div class="sample mono" style="font-size:11.5px">runner: sandbox-eu-3 ✓ attested</div><div class="meta">11.5px · 400 · JetBrains Mono</div></div>
       </div>
       <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
-        <strong>Known inconsistency, documented rather than hidden:</strong> this page's own <span class="mono">&lt;h1&gt;</span>
+        <strong>Partial inconsistency, documented rather than hidden:</strong> this page's own <span class="mono">&lt;h1&gt;</span>
         renders at 20px/700 (see <span class="mono">.intro h1</span> in <span class="mono">docs.css</span>, ported unchanged from the
-        original file), which doesn't match the 22px/800 "Heading" specimen above. The catalogue never formalized a single
-        heading size — it's an organically-grown set of sizes, not a strict scale. Worth resolving in a future pass, not
-        silently picked one way or the other here.
+        source file). As of the latest Heading update, the size now matches the 20px "Heading" specimen above — only the weight
+        still differs (700 for page titles vs. 800 for the Heading specimen). The catalogue never formalized a single
+        heading style — it's an organically-grown set of sizes and weights, not a strict scale. Worth resolving in a future
+        pass, not silently picked one way or the other here.
       </p>
     </section>
 

@@ -82,20 +82,80 @@
     </section>
 
     <section class="c">
-      <div class="c-head"><span class="n">02</span><h2>Floating — shadow tiers</h2><p>Four distinct shadow values are used across the overlay components, each proportional to how far the surface floats above the page.</p></div>
-      <div class="demo">
-        <div class="tile-row">
-          <div class="tile" style="box-shadow:0 4px 14px rgba(0,0,0,.15);border:1px solid hsl(var(--border))">Tooltip<br>0 4px 14px rgba(0,0,0,.15)</div>
-          <div class="tile" style="box-shadow:0 8px 24px rgba(0,0,0,.12);border:1px solid hsl(var(--border))">Custom Select<br>0 8px 24px rgba(0,0,0,.12)</div>
-          <div class="tile" style="box-shadow:0 10px 30px rgba(0,0,0,.15);border:1px solid hsl(var(--border))">Menu · Popover · Hover Card · Toast<br>0 10px 30px rgba(0,0,0,.15)</div>
-          <div class="tile" style="box-shadow:0 20px 50px rgba(0,0,0,.25);border:1px solid hsl(var(--border))">Dialog<br>0 20px 50px rgba(0,0,0,.25)</div>
+      <div class="c-head"><span class="n">02</span><h2>Shadow scale</h2><p>Four named tokens, extracted verbatim from the four elevation values already in use — no new values invented. Each row: visual example, token, actual value, typical usage.</p></div>
+      <div class="demo" style="display:flex;flex-direction:column;gap:24px">
+
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div class="tile" style="box-shadow:var(--shadow-sm);border:1px solid hsl(var(--border))">Small</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">Small <span class="mono code-chip" style="margin-left:6px">--shadow-sm</span></div>
+            <div class="mono" style="margin-top:4px;font-size:11px;color:hsl(var(--muted-foreground))">0 4px 14px rgba(0,0,0,.15)</div>
+            <div style="margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground))">Typical usage: Tooltip — the lightest lift, for a single-line hint.</div>
+          </div>
         </div>
+
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div class="tile" style="box-shadow:var(--shadow-md);border:1px solid hsl(var(--border))">Medium</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">Medium <span class="mono code-chip" style="margin-left:6px">--shadow-md</span></div>
+            <div class="mono" style="margin-top:4px;font-size:11px;color:hsl(var(--muted-foreground))">0 8px 24px rgba(0,0,0,.12)</div>
+            <div style="margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground))">Typical usage: Select — a dropdown list floating over its trigger.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div class="tile" style="box-shadow:var(--shadow-lg);border:1px solid hsl(var(--border))">Large</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">Large <span class="mono code-chip" style="margin-left:6px">--shadow-lg</span></div>
+            <div class="mono" style="margin-top:4px;font-size:11px;color:hsl(var(--muted-foreground))">0 10px 30px rgba(0,0,0,.15)</div>
+            <div style="margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground))">Typical usage: Menu, Popover, Hover Card, Toast, Navigation Menu panel — anchored surfaces with real content, floating further than a hint.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div class="tile" style="box-shadow:var(--shadow-xl);border:1px solid hsl(var(--border))">Extra Large</div>
+          <div>
+            <div style="font-weight:600;font-size:13px">Extra Large <span class="mono code-chip" style="margin-left:6px">--shadow-xl</span></div>
+            <div class="mono" style="margin-top:4px;font-size:11px;color:hsl(var(--muted-foreground))">0 20px 50px rgba(0,0,0,.25)</div>
+            <div style="margin-top:4px;font-size:12px;color:hsl(var(--muted-foreground))">Typical usage: Dialog — the highest surface in the system, centered over a dimmed scrim.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">03</span><h2>Elevation hierarchy</h2><p>The intended order the four tokens read in, lightest to heaviest.</p></div>
+      <div class="demo" style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">
+        <div class="mono" style="font-size:12.5px">Tooltip <span style="color:hsl(var(--muted-foreground))">— --shadow-sm</span></div>
+        <div style="color:hsl(var(--muted-foreground))">↓</div>
+        <div class="mono" style="font-size:12.5px">Select <span style="color:hsl(var(--muted-foreground))">— --shadow-md</span></div>
+        <div style="color:hsl(var(--muted-foreground))">↓</div>
+        <div class="mono" style="font-size:12.5px">Menu / Popover <span style="color:hsl(var(--muted-foreground))">— --shadow-lg</span></div>
+        <div style="color:hsl(var(--muted-foreground))">↓</div>
+        <div class="mono" style="font-size:12.5px">Dialog <span style="color:hsl(var(--muted-foreground))">— --shadow-xl</span></div>
       </div>
       <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
-        No named shadow tokens exist yet (e.g. <span class="mono">--shadow-sm/md/lg</span>) — these four values are written as
-        literal <span class="mono">box-shadow</span> declarations per component. The four steps are consistent enough to read
-        as an intentional scale (tooltip &lt; select &lt; menu/popover &lt; dialog), which is why they're presented as one here,
-        even though nothing in the CSS formalizes it yet.
+        Each step corresponds to how far the surface floats above the page and how much it competes for attention —
+        a hint (Tooltip) sits closest to the page; a surface that blocks interaction with everything behind it (Dialog)
+        sits highest. Hover Card, Toast, and the Navigation Menu panel share <span class="mono">--shadow-lg</span> with
+        Menu/Popover — they're peers in the hierarchy, not a fifth step.
+      </p>
+    </section>
+
+    <section class="c">
+      <div class="c-head"><span class="n">04</span><h2>Literal values intentionally retained</h2><p>Two shadows in the source are close to a token but not identical — left as literals rather than forced onto the nearest match, which would have silently changed their rendered value.</p></div>
+      <table>
+        <thead><tr><th>Component</th><th>Actual value</th><th>Closest token</th><th>Why not tokenized</th></tr></thead>
+        <tbody>
+          <tr><td>Slider tooltip</td><td class="mono">0 4px 12px rgba(0,0,0,.15)</td><td class="mono">--shadow-sm (0 4px 14px)</td><td>2px less blur — a distinct, deliberately lighter touch for a value that tracks the thumb continuously.</td></tr>
+          <tr><td>Card <span class="mono">.hoverable</span></td><td class="mono">0 10px 24px rgba(0,0,0,.1)</td><td class="mono">--shadow-lg (0 10px 30px)</td><td>Less blur and a lower alpha (.1 vs .15) — a subtler hover lift than an anchored overlay's shadow, appropriate since a card sits flat on the page until hovered.</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;font-size:12px;color:hsl(var(--muted-foreground));max-width:68ch">
+        Also excluded, for a different reason: the <span class="mono">box-shadow: 0 0 0 3px …</span> rules on Input's
+        focus/typing/error states. Those aren't elevation shadows at all — they're a spread-only ring/glow effect
+        already built from color tokens, so they were never candidates for this scale.
       </p>
     </section>
 
